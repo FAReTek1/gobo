@@ -3,8 +3,9 @@
 # %include ..\vec2
 
 func costume_count() {
+    local zero = 0;
     local old_costume = costume_number();
-    switch_costume 0;
+    switch_costume zero; # TODO: file an issue on gh to remove need for this workaround
     local ret = costume_number();
     switch_costume old_costume;
     return ret;
@@ -51,7 +52,7 @@ func measure_costume_height(){
 }
 
 func _measure_width(s, rd, x, y) { # rd = recursion depth
-    size_hack($s);
+    fnc_set_size $s;
 
     goto "Infinity", 0;
     local width = x_position() - 240;
@@ -59,11 +60,11 @@ func _measure_width(s, rd, x, y) { # rd = recursion depth
     width += -210 - x_position();
 
     if width > 40 {
-        pos_hack $x, $y;
+        fnc_goto $x, $y;
         return (width / size()) * 100;
 
     } elif $rd > 2 {
-        pos_hack $x, $y;
+        fnc_goto $x, $y;
         return 0;
     }
 
