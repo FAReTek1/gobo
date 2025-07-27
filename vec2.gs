@@ -3,7 +3,7 @@ struct Vec2 {
     x=0, y=0
 }
 
-%define Vec2(_x, _y) Vec2{x: _x, y:_y}
+%define Vec2(_x, _y) (Vec2{x: _x, y:_y})
 
 %define V2_STR(self) "Vec2(" & self.x & ", " & self.y & ")"
 
@@ -66,6 +66,7 @@ enum Span2 {
 %define I_HAT Vec2(1, 0)
 %define J_HAT Vec2(0, 1)
 %define V2_MOUSE() Vec2(mouse_x(), mouse_y())
+func v2_mouse() Vec2 {return V2_MOUSE();}
 
 # tells u the span of 2 vectors
 # i.e. the set of all linear combinations of the 2 vectors
@@ -113,6 +114,9 @@ func v2_normalize(Vec2 s) Vec2 {
     return V2_UNSCALE($s, mag);
 }
 
+# determinant
+%define V2_AREA(a,b) MAT2_DET(MAT2_V2(a, b))
+
 # work out out what v was from result, say v -> u
 # alternatively also works to give coefs of ih and jh to get u
 # note how if ih and jh are aligned, the denominator will be zero, and a math error will occur - this uses the same math as the isaligned function - a determinant
@@ -158,6 +162,12 @@ proc v2_draw_from Vec2 origin, Vec2 s, arrowhead_size=2.5, back_ratio=2 {
     goto $origin.x + $s.x, $origin.y + $s.y;
     pen_up;
 }
+
+%define V2_POS() Vec2(x_position(), y_position())
+func v2_pos() Vec2 {return V2_POS();}
+
+%define V2_LERP(a,b,t) Vec2(a.x + (t) * (b.x - a.x), a.y + (t) * (b.y - a.y))
+func v2_lerp(Vec2 a, Vec2 b, t) Vec2 {return V2_LERP($a, $b, $t);}
 
 struct Mat2 {
     a, b, 
@@ -303,8 +313,28 @@ func mat2_trace(Mat2 m) {
     return MAT2_TRACE($m);
 }
 
+# Get angle from V to C (clockwise) 
+%define V2_DIR_TO(V,C) atan (((V.x)-(C.x)) / ((V.y)-(C.y))) + 180 * ((C.y) > (V.y))
+func v2_dir_to(Vec2 v, Vec2 c) {return V2_DIR_TO($v, $c);}
+
+# Get angle from V to C (counterclockwise) 
+%define V2_DIR_TOCC(V,C) atan (((V.y)-(C.y)) / ((V.x)-(C.x))) + 180 * ((C.x) > (V.x))
+func v2_dir_tocc(Vec2 v, Vec2 c) {return V2_DIR_TOCC($v, $c);}
+
+# get clockwise angle
+%define V2_DIR(V) atan((V.x) / (V.y)) + 180 * ((V.y) < 0)
+func v2_dir(Vec2 v) {return V2_DIR($v);}
+
+# get counter clockwise angle
+%define V2_DIRCC(V) atan((V.y) / (V.x)) + 180 * ((V.x) < 0)
+func v2_dircc(Vec2 v) {return V2_DIR($v);}
+
 # ignored list
 # C7 null space
 # C12 inverse orthonormal/orthogonal matrices 5:25
 # C12 cramer's rule - just use an inverse matrix or gaussian elimination
 # C13 translating a matrix - translate to own, apply own transformation, translate back (multiply these 3 matrices 11:00)
+
+# this would work better if the macro bug is fixed
+%define V2_ROT(v, t) MAT2_MUL_V2(MAT2_ROTATION(t), v)
+%define V2_ROT_C(v, c, t) V2_ADD(MAT2_MUL_V2(MAT2_ROTATION(t), V2_SUB(v, c)), c)

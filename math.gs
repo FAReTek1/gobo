@@ -61,6 +61,7 @@
 
 # Return the direction (of a sprite) from a position  `(CX, CY)` to `(X, Y)`
 %define DIR(X,Y,CX,CY) atan (((X)-(CX)) / ((Y)-(CY))) + 180 * ((CY) > (Y))
+%define DIRCC(X,Y,CX,CY) atan (((Y)-(CY)) / ((X)-(CX))) + 180 * ((CX) > (X))
 
 # Return SIGN of V. If V < 0, return -1, elif V == 0, return 0, else return 1
 # 'Undefined' behaviour when used with non-numbers or booleans
