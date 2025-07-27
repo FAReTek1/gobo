@@ -1,5 +1,4 @@
 %include ..\vec2
-costumes "blank.svg";
 
 onflag {
     switch_costume "blank";
@@ -9,7 +8,7 @@ onflag {
         2, 0
     );
 
-    log str_v2(get_eigenvector_gradients_mat2(A));
+    log v2_str(mat2_get_eigenvector_gradients(A));
 
     forever{
         tick;
@@ -26,13 +25,13 @@ proc tick {
 
     set_pen_size 2;
 
-    Mat2 rot = ROTATION_MATRIX(90);
-    Mat2 shear = SHEAR_MATRIX(mouse_x() / 60);
+    Mat2 rot = MAT2_ROTATION(90);
+    Mat2 shear = MAT2_SHEAR(mouse_x() / 60);
 
-    Vec2 mv = MOUSE_V2();
+    Vec2 mv = V2_MOUSE();
 
-    Mat2 c1 = MUL_MAT2(rot, shear);
-    Mat2 c2 = MUL_MAT2(shear, rot);
+    Mat2 c1 = MAT2_MUL(rot, shear);
+    Mat2 c2 = MAT2_MUL(shear, rot);
 
     res = 20;
     mode = 0;
@@ -50,13 +49,13 @@ proc tick {
     }
 
     set_pen_color "#1f1f1f";
-    draw_v2 mv;
+    v2_draw mv;
 
     set_pen_color "#4098ab";
-    draw_v2 MUL_MAT2_V2(c1, mv);
+    v2_draw MAT2_MUL_V2(c1, mv);
     
     set_pen_color "#ab4040ff";
-    draw_v2 MUL_MAT2_V2(c2, mv);
+    v2_draw MAT2_MUL_V2(c2, mv);
 }
 
 proc demo x, y, mode{
@@ -69,17 +68,17 @@ proc demo x, y, mode{
     } elif $mode == 1 {
         Vec2 u = Vec2($x, $y);
         
-        Vec2 v = MUL_MAT2_V2(c1, u);
+        Vec2 v = MAT2_MUL_V2(c1, u);
 
         set_pen_color "#4097abff";
-        draw_v2_dot v;
+        v2_draw_dot v;
 
     } elif $mode == 2 {
         Vec2 u = Vec2($x, $y);
         
-        Vec2 v = MUL_MAT2_V2(c2, u);
+        Vec2 v = MAT2_MUL_V2(c2, u);
 
         set_pen_color "#ab4040ff";
-        draw_v2_dot v;
+        v2_draw_dot v;
     }
 }
