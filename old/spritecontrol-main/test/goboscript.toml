@@ -1,7 +1,0 @@
-no_miscellaneous_limits = false
-no_sprite_fencing = false
-frame_interpolation = false
-high_quality_pen = false
-
-[dependencies]
-spritecontrol = "https://github.com/FAReTek1/spritecontrol@v0.0.3"
