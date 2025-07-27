@@ -1,8 +1,4 @@
-costumes "Dango Cat.svg";
-
 %include ..\time
 onflag {
-    forever {
-        datetime t = DATETIME_NOW();
-    }
+    datetime t = DATETIME_NOW();
 }

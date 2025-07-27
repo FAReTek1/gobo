@@ -7,8 +7,7 @@
 
 %include ..\json
 
-costumes "blank.svg";
-
+%if not RUN_TEST_MODULE
 onflag {
     hide;
 
@@ -76,3 +75,4 @@ onflag {
         }
     }
 }
+%endif

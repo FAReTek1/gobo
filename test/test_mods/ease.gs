@@ -1,5 +1,3 @@
-costumes "Dango Cat.svg";
-
 # %define EASING_TIMER days_since_2000() * 86400 - start
 
 %include ..\ease

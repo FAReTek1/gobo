@@ -10,7 +10,6 @@
 %define TANH(X) ((antiln(X)-antiln(-(X)))/(antiln(X)+antiln(-(X))))
 
 %define LERP(a,b,t) ((a)+((b)-(a))*(t))
-%define POW(x,y) (antiln((y)*ln(x)))
 # Return the minimum of `A` and `B`.
 %define MIN(A,B) ((A) - ((A) - (B)) * ((A) > (B)))
 
@@ -73,9 +72,6 @@
 # Work out the ratio of val from a to b
 %define INVLERP(VAL,A,B) ((VAL) - (A)) / ((B) - (A))
 
-# Simple macro for squaring things. Can make certain scripts a bit less tedious to write
-%define SQUARE(V) ((V) * (V))
-
 # Return `log base b of x`
 %define LOGB(b,x) ln(x) / ln(b)
 
@@ -93,5 +89,4 @@ func safepow(x, y) {
 # true -> 1, false -> -1
 %define SGNBOOL(b) (2 * (b)) - 1
 
-# If both are true, sum is 2, if none are true, sum is 0, and if 1 is true, sum is 1
 %define XOR(a,b) ((a) != (b))

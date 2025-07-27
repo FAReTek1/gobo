@@ -79,7 +79,7 @@ nowarp proc parse_elem_content level {
         } else {
             elem_args = "";
         }
-        assert_t char == ">", "char != >, but instead " & char;
+        assert_eq char, ">", "char != >, but instead " & char;
         i++;
 
         is_self_closing = elem_args[length elem_args] == "/" or tag_name == "!--";
