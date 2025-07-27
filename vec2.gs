@@ -1,4 +1,9 @@
-# Vec2 library based on 3Blue1Brown's series on linear algebra
+# !> pref=v2, V2
+# !> author=faretek
+# !> credits=\
+# 3Blue1Brown's Linear algebra series
+# !> desc=2D vectors and 2x2 matrices
+
 struct Vec2 {
     x=0, y=0
 }

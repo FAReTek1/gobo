@@ -1,5 +1,9 @@
-# complex number struct and complex math
-# by faretek (2025-07-23)
+# !> pref=c
+# !> author=faretek
+# !> credits=
+# !> desc=complex number struct and complex math
+# !> date=2025-07-23
+
 %include ../math
 
 struct Complex {

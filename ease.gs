@@ -5,11 +5,9 @@
 
 # conditional compilation doesn't seem to be working...
 %define EASING_TIMER timer()
-
 # Macros to make definitions easier
 %define _GET_ETIMER(s, l) (EASING_TIMER - s) / (l)
 
-# fyi: forcing use of semicolon for code consistency
 %define _START_DEFINE_EASING \
     local x = _GET_ETIMER($startt, $len); \
     if x > 1 { \

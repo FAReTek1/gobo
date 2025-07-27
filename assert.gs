@@ -1,4 +1,7 @@
-# assert certain conditions, if not true, give an error
+# !> pref=
+# !> author=faretek
+# !> credits=aspizu
+# !> desc=assert certain conditions, if not true, give an error
 
 # assert true
 proc assert condition, message = "", dont_break = false {

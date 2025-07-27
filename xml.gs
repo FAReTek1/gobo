@@ -1,6 +1,10 @@
-# small xml/html parser by faretek
+# !> pref=
+# !> author=faretek
+# !> credits=
+# !> desc=small xml/html parser/lexer
+# !> date=2025-07-23 - 2025-07-24
+
 # doesn't really do error checking
-# 2025-07-23 - 2025-07-24 
 # this module heavily pollutes the global namespace
 # i wish namespaces existed
 

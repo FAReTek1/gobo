@@ -1,8 +1,10 @@
-# Utilites for single chars.
-# This could be internally used by ../string.gs to support a string version of these functions
+# !> pref=chr
+# !> author=faretek
+# !> credits=\
+# Unicode list: https://scratch.mit.edu/projects/616351443/
+# !> desc=Utilites for single chars.
 
-# > [!CREDITS]
-# https://scratch.mit.edu/projects/616351443/
+# This could be internally used by ../string.gs to support a string version of these functions
 
 # change these if you need to have detection e.g. for ä vs Ä
 %define _CHAR_LOWERCASE "abcdefghijklmnopqrstuvwxyz"
@@ -11,10 +13,9 @@
 %define _CHAR_COSTUME "char.gs//abcdefghijklmnopqrstuvwxyz"
 %define _CHAR_NULLCOS "char.gs//0"
 
-costumes "../blank.svg" as _CHAR_NULLCOS;
-costumes "../blank.svg" as _CHAR_COSTUME;
+costumes "../assets/blank.svg" as _CHAR_NULLCOS;
+costumes "../assets/blank.svg" as _CHAR_COSTUME;
 
-# https://scratch.mit.edu/projects/616351443/ for pre-generated list. Python was giving errors when trying to print certain chars
 list unicode = file ```..\_unicode.txt```;
 
 func _char_inner_ord(char, low, high) {

@@ -1,3 +1,8 @@
+# !> pref=
+# !> author=faretek
+# !> credits=https://scratch.mit.edu/projects/662899804/
+# !> desc=non-builtin time operations
+
 # Fetch different epochs/time values
 
 %define TIME() (days_since_2000() + 10957) * 86400
