@@ -50,9 +50,9 @@ proc sieve_of_atkin limit {
                 sieve_of_atkin[cmp] = not sieve_of_atkin[cmp];
             }
 
-            j ++;
+            j++;
         }
-        i ++;
+        i++;
     }
 
     # Mark all multiples of
