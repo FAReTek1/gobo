@@ -10,7 +10,8 @@ costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "str
 hide;
 
 onflag {
-    sieve_of_atkin 100;
+    log base_conv(1064, B8_DIGITS, B16_DIGITS & "G");
+
 }
 
 # proc tick{

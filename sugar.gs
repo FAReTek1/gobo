@@ -13,3 +13,5 @@ proc change_xy dx, dy {
     goto x_position() + $dx, y_position() + $dy;
 }
 %define onbool(b) ontimer > 0.0000000000001 / (b)
+
+proc c txt {}  # visible comment

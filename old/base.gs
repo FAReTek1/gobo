@@ -8,7 +8,7 @@
 %define B16_DIGITS "0123456789ABCDEF"
 
 # Based on https://www.rapidtables.com/convert/number/base-converter.html
-func convert_base(val, og_digits, new_digits) {
+func convert_base(val, og_digits=B10_DIGITS, new_digits=B16_DIGITS) {
     local og_base = length $og_digits;
     local new_base = length $new_digits;
     
@@ -28,7 +28,7 @@ func convert_base(val, og_digits, new_digits) {
     return ret;
 }
 
-func convert_base_dp(val, og_digits, new_digits, res) {
+func convert_base_dp(val, og_digits=B10_DIGITS, new_digits=B16_DIGITS, res=10) {
     local dpi = findchar($val, ".");
 
     if dpi == 0 {

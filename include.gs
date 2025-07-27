@@ -14,6 +14,7 @@
 %include ..\calculus
 %include ..\char
 %include ..\ease
+%include ..\base
  
 %include ..\vec2
 %include ..\geo2d
