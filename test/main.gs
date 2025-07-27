@@ -1,3 +1,4 @@
-costumes "Dango Cat.svg";
+costumes "blank.svg";
 
-%include test_mods/json
+%define RUN_TEST_MODULE
+%include test_mods/char
