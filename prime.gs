@@ -66,7 +66,7 @@ proc sieve_of_atkin limit {
                 sq += i * i;                
             }
         }
-        i ++;
+        i++;
     }
 
     # 2 and 3 are known
