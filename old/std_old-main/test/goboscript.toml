@@ -1,0 +1,7 @@
+no_miscellaneous_limits = false
+no_sprite_fencing = false
+frame_interpolation = false
+high_quality_pen = false
+
+[dependencies]
+std = "https://github.com/FAReTek1/std@v0.0.10b1"
