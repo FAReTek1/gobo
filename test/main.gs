@@ -9,28 +9,8 @@ costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "str
 
 hide;
 
-proc tick {
-    erase_all;
-    set_brightness_effect -100;
-    f3d_prism pos(0, 0, 100, 90), "Cat", "", timer() * 90, 10, 10;
-
-    clear_graphic_effects;
-    fnc_goto_pos pos(0, 0, 100, 90);
-    if f3d_prism_face("Cat", "", timer() * 90) {
-        stamp;
-    }
-    ########################
-    switch_costume "stretch1";
-    goto_pos_stretch pos(100, 0, 100, 90), v2_scale(v2_sub(V2_MOUSE(), Vec2(100, 0)), 2);
-    stamp;
-}
-
 onflag {
-    cache_costume_dims;
-
-    forever{
-        tick;
-    }
+    sieve_of_atkin 100;
 }
 
 # proc tick{

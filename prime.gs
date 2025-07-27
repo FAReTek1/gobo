@@ -3,21 +3,10 @@
 ################################################################
 # Sieves
 # https://www.geeksforgeeks.org/sieve-of-atkin/
-list atkin_primes;
 list sieve_of_atkin;
 proc sieve_of_atkin limit {
-    # 2 and 3 are known
-    # to be prime
-    if $limit > 2 {
-        add 2 to atkin_primes;
-        if $limit > 3 {
-            add 3 to atkin_primes;
-        }
-    }
-
     # Initialise the sieve
     # array with False values
-    delete atkin_primes;
     delete sieve_of_atkin;
 
     repeat $limit {add false to sieve_of_atkin;}
@@ -79,15 +68,9 @@ proc sieve_of_atkin limit {
         }
         i ++;
     }
-    
-    # Return primes
-    # using sieve[]
 
-    i = 1;
-    repeat length sieve_of_atkin{
-        if sieve_of_atkin[i] {
-            add i to atkin_primes;
-        }
-        i++;
-    }
+    # 2 and 3 are known
+    # to be prime
+    sieve_of_atkin[2] = true;
+    sieve_of_atkin[3] = true;
 }

@@ -8,6 +8,7 @@
 %include ..\sugar
 %include ..\xml
 %include ..\time
+%include ..\prime
 
 %include ..\cmath
 %include ..\calculus
