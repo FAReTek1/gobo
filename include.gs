@@ -23,5 +23,7 @@
 
 %include ..\pos
 %include ..\projectenv
+%include ..\stretch
 
 %include ..\f3d
+%include ..\cosfx

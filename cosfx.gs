@@ -1,4 +1,4 @@
-# Collection of procedures which use the fisheye/whirl effects to warp the image of a sprite in a simple way
+# just simple combinations of graphic effects not worth their own file
 
 proc jiggle amt {
     # Set whirl effect and turn right by the same amount
