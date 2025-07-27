@@ -1,6 +1,6 @@
 # Getting information from/about costumes.
 
-%include ..\vec2
+# %include ..\vec2
 
 func costume_count() {
     local old_costume = costume_number();

@@ -4,7 +4,7 @@
 # !> desc=complex number struct and complex math
 # !> date=2025-07-23
 
-%include ../math
+# %include ../math
 
 struct Complex {
     r=0,

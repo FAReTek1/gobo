@@ -6,7 +6,7 @@
 # %define DISABLE_PROJECTENV_AUTO_LOOP
 # %define DISABLE_PROJECTENV_LOOP_ON_STOP
 
-%include ..\sugar
+# %include ..\sugar
 
 %define PROJECTENV_LOOP forever{projectenv_fps_tick;}
 

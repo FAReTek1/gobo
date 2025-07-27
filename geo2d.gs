@@ -1,8 +1,9 @@
 # 2D intersection scripts and stucts for geometrical objects
 # does not directly implement a Vector/Point/Node struct - it uses vec2.gs
 # Intersections belong to the simpler object (i.e. less params)
-%include ..\vec2
-%include ..\math
+
+# %include ..\vec2
+# %include ..\math
 
 ###################### structs ######################
 struct Polar{r, t} # t = theta

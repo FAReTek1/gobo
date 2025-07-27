@@ -1,10 +1,19 @@
 costumes "blank.svg";
 
+costumes "../assets/f3d/*";
 %define RUN_TEST_MODULE
 # %include test_mods\geo2d
-%include ..\projectenv
+%include ..\include
+
+proc tick {
+    erase_all;
+    f3d_prism pos(0, 0, 100, 90), "Cat", "", timer() * 90, 10, 10;
+}
 
 onflag {
+    forever{
+        tick;
+    }
 }
 
 # proc tick{

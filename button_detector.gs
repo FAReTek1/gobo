@@ -5,7 +5,7 @@
 # !> date=
 # !> globals=
 
-%include ..\assert
+# %include ..\assert
 
 costumes "../assets/buttonassets/add to studio.svg"         as "button_detector.gs//add to studio";
 costumes "../assets/buttonassets/cancel comment.svg"        as "button_detector.gs//cancel comment";

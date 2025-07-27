@@ -4,7 +4,7 @@
 ################################################################
 # fisheye
 
-%include ..\geo2d
+# %include ..\geo2d
 
 %define NORM_FISHEYE(f) (((f) + 100) / 100)
 

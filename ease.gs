@@ -1,7 +1,7 @@
 # easings from https://easings.net/
 # ported to gs by faretek 2025-07-24
 # todo: consider elastic rate
-%include ..\math
+# %include ..\math
 
 # conditional compilation doesn't seem to be working...
 %define EASING_TIMER timer()

@@ -1,6 +1,6 @@
 # pos struct and methods
 
-%include ..\geo2d
+# %include ..\geo2d
 
 struct pos {
     x = 0, # x pos

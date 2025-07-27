@@ -8,7 +8,7 @@
 # this module heavily pollutes the global namespace
 # i wish namespaces existed
 
-%include ..\assert
+# %include ..\assert
 
 # enum ElementType {
 #     normal,

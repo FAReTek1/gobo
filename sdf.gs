@@ -1,4 +1,4 @@
-%include ..\vec2
+# %include ..\vec2
 
 %define SDF_V2(a, b) V2_DIST(a, b)
 func sdf_v2(Vec2 a, Vec2 b) {return SDF_V2($a, $b);}
