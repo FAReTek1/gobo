@@ -1,4 +1,6 @@
 # base conversion
+%include ..\string
+%include ..\math
 
 %define B10_DIGITS "0123456789"
 %define B2_DIGITS "01"
@@ -14,7 +16,7 @@ func convert_base(val, og_digits, new_digits) {
     local b10 = 0;
     local i = 1;
     repeat length $val {
-        b10 += (findchar($og_digits, $val[i]) - 1) * POW(og_base, length $val - i);
+        b10 += (findchar($og_digits, $val[i]) - 1) * round(POW(og_base, length $val - i));
         i++;
     }
 
@@ -26,7 +28,7 @@ func convert_base(val, og_digits, new_digits) {
     return ret;
 }
 
-func convert_base_dp(val, og_digits, new_digits, res) {
+func convert_base_dp(val, og_digits, new_digits, res=10) {
     local dpi = findchar($val, ".");
 
     if dpi == 0 {
@@ -42,19 +44,19 @@ func convert_base_dp(val, og_digits, new_digits, res) {
     local b10 = 0;
     local i = 1;
     repeat length whole {
-        b10 += (findchar($og_digits, whole[i]) - 1) * POW(og_base, length whole - i);
+        b10 += (findchar($og_digits, whole[i]) - 1) * round(POW(og_base, length whole - i));
         i++;
     }
 
     i = 1;
     repeat length dec{
-        b10 += (findchar($og_digits, dec[i]) - 1) * POW(og_base, -i);
+        b10 += (findchar($og_digits, dec[i]) - 1) * round(POW(og_base, -i));
         i++;
     }
 
-    b10 = floor(b10 * POW(new_base, $res));
+    b10 = floor(b10 * round(POW(new_base, $res)));
     local ret = convert_base(b10, "0123456789", $new_digits);
 
     local dpi = length ret - $res;    
-    return slice(ret, 1, dpi) & "." & slice(ret, dpi + 1, length ret);
+    return slice(ret, 1, dpi + 1) & "." & slice(ret, dpi + 1, length ret);
 }

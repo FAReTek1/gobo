@@ -1,5 +1,7 @@
 # base conversion
 
+%include ..\string
+
 %define B10_DIGITS "0123456789"
 %define B2_DIGITS "01"
 %define B8_DIGITS "01234567"
