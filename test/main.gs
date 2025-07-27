@@ -3,9 +3,12 @@ costumes "blank.svg";
 %define RUN_TEST_MODULE
 
 # %include test_mods\geo2d
-%include ..\pos_hack
+%include ..\button_detector
 
 onflag {
+    forever {
+        log button_detector();
+    }
 }
 
 # proc tick{

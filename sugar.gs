@@ -12,3 +12,4 @@ proc change_xy dx, dy {
     # because it causes differences when the pen is down
     goto x_position() + $dx, y_position() + $dy;
 }
+%define onbool(b) ontimer > 0.0000000000001 / (b)
