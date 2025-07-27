@@ -23,7 +23,7 @@ func _char_inner_ord(char, low, high) {
     # you wouldn't use it with large lists (it's a linear search)
 
     # But in this case, you can actually just binary sort for a unicode character lol
-    # todo: benchmark this
+    # TODO: benchmark this
     local low = $low;
     local high = $high;
 

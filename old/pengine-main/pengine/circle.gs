@@ -20,7 +20,7 @@ proc draw_circle Circle c, res {
 
 # Alternate name: fill vesica
 proc clip_circles Circle c1, Circle c2 {
-    # render the intersection between 2 circles. todo: make a struct that this outputs and seperate rendering and clipping
+    # render the intersection between 2 circles. TODO: make a struct that this outputs and seperate rendering and clipping
     local PtX2 isct = intersect_circles($c1, $c2);
     if isct.x1 == intersect_circle_error_codes.circinside {
         if $c1.r > $c2.r {

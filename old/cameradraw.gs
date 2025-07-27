@@ -29,7 +29,7 @@ proc cdraw_aw pos pos, hole {
 }
 ################################################################
 # basic
-# todo: maybe add an option to change the starting angle of the outline? (refer the inner pengine function)
+# TODO: maybe add an option to change the starting angle of the outline? (refer the inner pengine function)
 proc cfill_outline res, th {
     fill_outline $res, $th * _camera.s;
 }

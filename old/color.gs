@@ -4,9 +4,9 @@
 %include ..\base
 %include ..\math
 
-# todo: add macro versions of stamping/pencolor setting
-# todo: add a coonditional compilation to store the current pen colour
-# todo: testing
+# TODO: add macro versions of stamping/pencolor setting
+# TODO: add a coonditional compilation to store the current pen colour
+# TODO: testing
 ############################################ structs ############################################
 
 # Prefixed with a c to avoid naming conflicts with math.gs's RGB macro

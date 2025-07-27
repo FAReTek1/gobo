@@ -1,6 +1,6 @@
 # Polynomial solvers (for 2 <= n <= 4)
 
-# todo: use vec2/3/4 etc instead of ret234
+# TODO: use vec2/3/4 etc instead of ret234
 struct Ret2 {a, b}
 struct Ret3 {a, b, c}
 struct Ret4 {a, b, c, d}

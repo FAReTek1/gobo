@@ -19,7 +19,7 @@ list _binomial_lut = [
 
 list _binomial_lut_gen;
 
-# todo: stop using split and JOIN here
+# TODO: stop using split and JOIN here
 func binomial(n, k) {
     until $n <= length _binomial_lut {
         delete _binomial_lut_gen;

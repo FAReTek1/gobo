@@ -27,7 +27,7 @@ proc _f3d_by_x cost, xw, coef, Vec2 og {
 
     set_fisheye_effect inverse_fisheye(p1, p2);
 
-    hack_steps $coef * w;
+    fnc_move_steps $coef * w;
 }
 
 proc _f3d_by_y cost, yw, coef, Vec2 og {
@@ -44,7 +44,7 @@ proc _f3d_by_y cost, yw, coef, Vec2 og {
     set_fisheye_effect inverse_fisheye(p1, p2);
 
     turn_left 90;
-    hack_steps $coef * w;
+    fnc_move_steps $coef * w;
     turn_right 90;
 }
 
@@ -114,10 +114,10 @@ func f3d_prism_face(cost, xd, yd) {
 proc f3d_prism pos p, cost, xd, yd, layer_count, depth {
     local i = 0;
     repeat $layer_count{
-        goto_pos $p;
+        fnc_goto_pos $p;
 
         if $xd > "" {
-            hack_steps i;
+            fnc_move_steps i;
 
             if _CHECK_LAYER_BUG($xd) {
                 switch_costume $cost & " XF";
@@ -129,7 +129,7 @@ proc f3d_prism pos p, cost, xd, yd, layer_count, depth {
             
         } else {
             turn_left 90;
-            hack_steps i;
+            fnc_move_steps i;
             turn_right 90;
 
             if _CHECK_LAYER_BUG($yd) {

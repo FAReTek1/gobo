@@ -1,6 +1,6 @@
 # easings from https://easings.net/
 # ported to gs by faretek 2025-07-24
-# todo: consider elastic rate
+# TODO: consider elastic rate
 # %include ..\math
 
 # conditional compilation doesn't seem to be working...

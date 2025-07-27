@@ -39,3 +39,8 @@ proc fnc_move_steps steps {
     fnc_change_xy sin(direction()) * $steps,
                   cos(direction()) * $steps;
 }
+
+proc fnc_goto_pos pos p {
+    fnc_goto_set_size $p.x, $p.y, $p.s;
+    point_in_direction $p.d;
+}
