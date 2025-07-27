@@ -1,6 +1,6 @@
 %include ../xml
 
-list xmlfile = file ```xml.xml```;
+list xmlfile = file ```test_mods/xml.xml```;
 
 onflag {
     xml = "";
