@@ -3,26 +3,26 @@
 # !> credits=
 # !> desc=Bypass sprite fencing
 
-costumes "../assets/size0.svg" as "pos_hack.gs//size0",
-         "../assets/size1.svg" as "pos_hack.gs//size1",
-         "../assets/size2.svg" as "pos_hack.gs//size2";
+costumes "../assets/size0.svg" as "fenceless.gs//size0",
+         "../assets/size1.svg" as "fenceless.gs//size1",
+         "../assets/size2.svg" as "fenceless.gs//size2";
 
-%define _POS_HACK_SWITCH_COSTUME_FOR_SIZE(s) switch_costume "pos_hack.gs//size" & (s < 100) + (s < 1); set_size s
+%define _FNC_HACK_SWITCH_COSTUME_FOR_SIZE(s) switch_costume "fenceless.gs//size" & (s < 100) + (s < 1); set_size s
 
 proc fnc_set_size size {
     local old_costume = costume_number();
-    _POS_HACK_SWITCH_COSTUME_FOR_SIZE($size);
+    _FNC_HACK_SWITCH_COSTUME_FOR_SIZE($size);
     switch_costume old_costume;
 }
 
 proc fnc_goto_set_size x, y, size {
     local old_costume = costume_number();
 
-    switch_costume "pos_hack.gs//size0";
+    switch_costume "fenceless.gs//size0";
     set_size "Infinity";
     goto $x, $y;
 
-    _POS_HACK_SWITCH_COSTUME_FOR_SIZE($size);
+    _FNC_HACK_SWITCH_COSTUME_FOR_SIZE($size);
     switch_costume old_costume;
 }
 
