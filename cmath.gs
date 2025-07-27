@@ -7,7 +7,7 @@ struct Complex {
     i=0
 }
 
-%define Complex(_r, _i) Complex{r:_r, i:_i}
+%define Complex(_r, _i) (Complex{r:_r, i:_i})
 
 # Simple ops
 %define C_STR(s) "Complex(" & s.r & " + " & s.i & "i)"
@@ -106,7 +106,7 @@ func c_atan(Complex s) Complex {
     return Complex(ATAN2(z0.i, z0.r) / -114.5915590262, 0.5 * ln(C_ABS(z0)));
 }
 
-# these last 4 seem to be buggy. can't fix rn because no wifi
+# todo: these last 4 seem to be buggy
 %define C_SINH(s) Complex(\
     SINH(s.r) * cos(s.i * 57.2957795131),\
     COSH(s.r) * sin(s.i * 57.2957795131))
