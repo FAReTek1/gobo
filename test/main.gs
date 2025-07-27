@@ -1,14 +1,10 @@
 costumes "blank.svg";
 
 %define RUN_TEST_MODULE
-
 # %include test_mods\geo2d
-%include ..\button_detector
+%include ..\projectenv
 
 onflag {
-    forever {
-        log button_detector();
-    }
 }
 
 # proc tick{
