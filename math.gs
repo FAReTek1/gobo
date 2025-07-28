@@ -22,6 +22,7 @@
 # Combine RGBA values into a single value for use with the `set_pen_color` block.
 %define RGBA(R,G,B,A) (((R) * 65536) + ((G) * 256) + (B) + ((A) * 16777216))
 
+# TODO: consider moving these base conversions to base.gs
 # Parse a hexadecimal value.
 %define HEX(VALUE) (("0x"&(VALUE))+0)
 

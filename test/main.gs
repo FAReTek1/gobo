@@ -3,15 +3,14 @@ costumes "blank.svg";
 costumes "../assets/f3d/*";
 costumes "../assets/thinkingplanely stretch box (4000x4000).svg" as "stretch1";
 costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "stretch1f";
-%define RUN_TEST_MODULE
-# %include test_mods\geo2d
-%include ..\include
 
+%define RUN_TEST_MODULE
+%include ..\include
+# %include test_mods\geo2d
 hide;
 
 onflag {
-    log base_conv(1064, B8_DIGITS, B16_DIGITS & "G");
-
+    log base_convf("123.456", "0123456", B16_DIGITS & "G");
 }
 
 # proc tick{
