@@ -85,6 +85,11 @@ func safepow(x, y) {
 # Constants
 %define PI 3.141592653589793
 %define E 2.718281828459045
+# PI * 2
+%define TAU 6.283185307179586
+# (1 + sqrt 5) / 2
+%define GOLDEN_RATIO 1.618033988749895
+%define INF "Infinity"
 
 # boolean things
 

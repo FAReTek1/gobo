@@ -10,7 +10,7 @@ costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "str
 hide;
 
 onflag {
-    log base_convf("123.456", "0123456", B16_DIGITS & "G");
+    log INF;
 }
 
 # proc tick{
