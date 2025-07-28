@@ -10,6 +10,8 @@ struct Vec2 {
 
 %define Vec2(_x, _y) (Vec2{x: _x, y:_y})
 
+%define V2_TUP(v) v.x, v.y
+
 %define V2_STR(self) "Vec2(" & self.x & ", " & self.y & ")"
 
 func v2_str(Vec2 self) {
@@ -74,7 +76,6 @@ enum Span2 {
 func v2_mouse() Vec2 {return V2_MOUSE();}
 
 %define V2_GOTO(v) goto v.x, v.y
-
 # tells u the span of 2 vectors
 # i.e. the set of all linear combinations of the 2 vectors
 func v2_rank(Vec2 s, Vec2 o) {

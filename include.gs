@@ -26,6 +26,7 @@
 %include ..\pos
 %include ..\projectenv
 %include ..\stretch
+%include ..\pointengine
 %include ..\bezier2
 
 %include ..\f3d
