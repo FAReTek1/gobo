@@ -26,6 +26,7 @@
 %include ..\pos
 %include ..\projectenv
 %include ..\stretch
+%include ..\bezier2
 
 %include ..\f3d
 %include ..\cosfx

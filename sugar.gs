@@ -15,3 +15,6 @@ proc change_xy dx, dy {
 %define onbool(b) ontimer > 0.0000000000001 / (b)
 
 proc c txt {}  # visible comment
+
+%define MOUSE_TUP mouse_x(), mouse_y()
+%define POS_TUP x_position(), y_position()

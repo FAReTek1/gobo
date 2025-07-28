@@ -73,6 +73,8 @@ enum Span2 {
 %define V2_MOUSE() Vec2(mouse_x(), mouse_y())
 func v2_mouse() Vec2 {return V2_MOUSE();}
 
+%define V2_GOTO(v) goto v.x, v.y
+
 # tells u the span of 2 vectors
 # i.e. the set of all linear combinations of the 2 vectors
 func v2_rank(Vec2 s, Vec2 o) {

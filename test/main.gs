@@ -8,9 +8,17 @@ costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "str
 %include ..\include
 # %include test_mods\geo2d
 hide;
-
 onflag {
-    log INF;
+    forever {
+        erase_all;
+        Bez2 a = Bez2(
+            0, 0,
+            100, 0,
+            mouse_x(), mouse_y()
+        );
+
+        bez2_draw a;
+    }
 }
 
 # proc tick{

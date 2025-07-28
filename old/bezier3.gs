@@ -22,11 +22,12 @@ proc bezier3_draw Bezier3 b, res {
     local _6 = 3 * ($b.y1 - $b.y0);
 
     local t = 0;
-    repeat $res + 1{
+    goto $b.x0, $b.y0;
+
+    repeat $res {
+        t += 1 / $res;
         goto $b.x0 + t * (_3 + t * (_2 + t * _1)),
              $b.y0 + t * (_6 + t * (_5 + t * _4));
-        pen_down;
-        t += 1 / $res;
     }
     pen_up;
 }
