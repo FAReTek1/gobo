@@ -53,10 +53,11 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    set_ps_color_HEX "99FF0000";
+    set_ps_color_HEX "9900FF00";
 
     Line2 l = pe_line(1, 2);
-    fill_capped_line l, abs(SDF_LINE2(l, pe_pts[3])) * 2;
+    set_pen_size abs(sdf_line_seg(l, pe_pts[3])) * 2;
+    LINE2_DRAW(l);
 }
 
 proc draw_vertline x {
