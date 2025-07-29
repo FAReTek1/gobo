@@ -38,3 +38,4 @@
 
 %include ..\pengine
 %include ..\clip
+%include ..\sttf

@@ -3,6 +3,7 @@ costumes "blank.svg";
 costumes "../assets/f3d/*";
 costumes "../assets/thinkingplanely stretch box (4000x4000).svg" as "stretch1";
 costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "stretch1f";
+costumes "sttf1.svg", "sttf2.svg", "sttf3.svg";
 
 %define DISABLE_PROJECTENV_AUTO_LOOP
 %define DISABLE_PROJECTENV_LOOP_ON_STOP
@@ -17,7 +18,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 4;
+        pe_add_pts 3;
     }
 
     forever {
@@ -46,12 +47,10 @@ proc render {
     set_pen_color "#0000FF";
     set_pen_size 1;
 
-    Circle c1 = pe_circle(1, 2);
-    draw_circle c1;
-
-    Circle c2 = pe_circle(3, 4);
-    draw_circle c2;
-
-    set_ps_color_HEX "5500FF00";
-    render_cclip circ_clip(c1, c2);
+    switch_costume "sttf1";
+    set_ps_color_HEX "00AAFF";
+    STTF pe_pts[1].x, pe_pts[1].y,
+         pe_pts[2].x, pe_pts[2].y,
+         pe_pts[3].x, pe_pts[3].y, costume_number();
+    cstamp;
 }
