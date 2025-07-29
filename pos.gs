@@ -11,6 +11,7 @@ struct pos {
 %define pos(_x,_y,_s,_d) (pos{x:_x, y:_y, s:_s, d:_d})
 
 %define POS_CIRC(c) pos(c.x, c.y, c.r, 90)
+%define POS_CIRCA(c, a) pos(c.x, c.y, c.r, a)
 %define POS_V2(v) pos(v.x, v.y, 100, 90)
 %define CIRC_POS(p) Circle(p.x, p.y, p.s)
 %define POS_POS() pos(x_position(), y_position(), size(), direction())

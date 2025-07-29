@@ -53,9 +53,18 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    set_pen_color "#FF0000";
-    set_ps_color_HEX "AAFF0000";
-    FILL_QUAD_V2(pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4]);
+    set_ps_color_HEX "99FF0000";
+
+    Circle c = pe_circle(1, 2);
+    Vec2 cc = V2_CIRC(c);
+    c.r *= 2;
+
+    d = V2_DIR_TO(pe_pts[3], cc);
+    ext = (V2_DIR_TO(pe_pts[4], cc) - d) % 360;
+
+    pos p = POS_CIRCA(c, d);
+
+    fill_arc p, ext, 0.5;
 
     set_pen_color "#0000FF";
 }
