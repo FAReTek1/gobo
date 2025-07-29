@@ -51,12 +51,12 @@ proc render {
 
     h1 = 2 * abs(sdf_line_seg(pe_line(1, 2), pe_pts[4]));
     h2 = 2 * abs(sdf_line_seg(pe_line(2, 3), pe_pts[4]));
-    h = MIN(h1, h2);
+    h = h1; # MIN(h1, h2);
     set_pen_size h;
 
-    set_pen_color "#0000FF";
+    set_pen_color "0x550000FF";
     LINE2_DRAW(l1);
-    LINE2_DRAW(l2);
+    # LINE2_DRAW(l2);
     set_ps_color_HEX "00FF00";
     STLF l1, h;
 }
