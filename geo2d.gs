@@ -67,12 +67,6 @@ func line2_intersect(Line2 self, Line2 other) Vec2 {
     return LINE2_INTERSECT_DENOM($self, $other, den);
 }
 
-proc line2_draw Line2 l {
-    goto $l.x1, $l.y1;
-    pen_down;
-    goto $l.x2, $l.y2;
-    pen_up;
-}
 
 %define LINE2_IS_VERTICAL(l) (l.x1 == l.x2)
 %define LINE2_IS_HORIZONTAL(l) (l.y1 == l.y2)

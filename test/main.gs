@@ -58,5 +58,5 @@ proc render {
     LINE2_DRAW(l1);
     LINE2_DRAW(l2);
     set_ps_color_HEX "00FF00";
-    fill_miter_arc l1, l2, h;
+    STLF l1, h;
 }

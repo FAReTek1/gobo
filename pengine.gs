@@ -163,7 +163,7 @@ proc box_draw Box b {BOX_DRAW($b);}
         i++;                            \
     }                                   \
     goto lst[1].x, lst[1].y;            \
-    pen_up;                             \
+    pen_up;
 
 %define FILL_V2_LIST(lst)               \
     local i = 1;                        \
@@ -172,10 +172,9 @@ proc box_draw Box b {BOX_DRAW($b);}
         fill_tri lst[i].x, lst[i].y,    \
                  lst[j].x, lst[j].y,    \
                  lst[0].x, lst[0].y;    \
-                                        \
         j = i;                          \
         i++;                            \
-    }                                   \
+    }
 
 ###################### arc ######################
 # TODO: put these into costume folders...
@@ -1026,5 +1025,50 @@ proc fill_miter_arc Line2 l1, Line2 l2, th {
                 x2: $l1.x1,
                 y2: $l1.y1
             }, $th; 
+    }
+}
+
+###################### stlf ######################
+costumes "../assets/pengine/stlf/*.svg";
+
+# Uh, why doesn't this use a line?
+proc STLF Line2 l, th, style="stlf1", cap="stlf3" {
+    local dist = LINE2_LENGTH($l);
+    if dist > $th {
+        goto_pos_stretch pos{
+            x: ($l.x1 + $l.x2) / 2,
+            y: ($l.y1 + $l.y2) / 2,
+            s: 100,
+            d: DIR($l.x2, $l.y2, $l.x1, $l.y1)
+        }, Vec2 {
+            x: dist - $th,
+            y: $th
+        };
+        switch_costume $style;
+        cstamp;
+
+        set_fisheye_effect 0;
+        fnc_set_size $th;
+        switch_costume $cap;
+        fnc_goto $l.x1 + 0.5 * $th * sin(direction()),
+                 $l.y1 + 0.5 * $th * cos(direction());
+        cstamp;
+
+        fnc_goto $l.x2 - 0.5 * $th * sin(direction()),
+                 $l.y2 - 0.5 * $th * cos(direction());
+        cstamp;
+
+    } else {
+        goto_pos_stretch pos{
+            x: ($l.x1 + $l.x2) / 2,
+            y: ($l.y1 + $l.y2) / 2,
+            s: 100,
+            d: DIR($l.x2, $l.y2, $l.x1, $l.y1)
+        }, Vec2 {
+            x: dist,
+            y: $th
+        };
+        switch_costume $cap;
+        cstamp;
     }
 }
