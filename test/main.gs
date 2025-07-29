@@ -57,14 +57,12 @@ proc render {
 
     Circle c = pe_circle(1, 2);
     Vec2 cc = V2_CIRC(c);
-    c.r *= 2;
 
     d = V2_DIR_TO(pe_pts[3], cc);
-    ext = (V2_DIR_TO(pe_pts[4], cc) - d) % 360;
 
     pos p = POS_CIRCA(c, d);
 
-    fill_cone p, ext;
+    fill_regply p, abs((pe_pts[4].x + pe_pts[4].y) // 15);
 
     set_pen_color "#0000FF";
 }
