@@ -1,8 +1,8 @@
 # Color conversion and management for goboscript
 
-%include ..\string
-%include ..\base
-%include ..\math
+# %include ..\string
+# %include ..\base
+# %include ..\math
 
 # TODO: add macro versions of stamping/pencolor setting
 # TODO: add a coonditional compilation to store the current pen colour
