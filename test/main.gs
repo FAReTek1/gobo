@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 3;
+        pe_add_pts 4;
     }
 
     forever {
@@ -33,14 +33,9 @@ onflag {
 proc render {
     set_pen_size 1;
     set_pen_color "#0000FF";
-    delete quad_bezier_polygon;
-    i = 1;
-    repeat length pe_pts {
-        add pe_pts[i] to quad_bezier_polygon;
-        i++;
-    }
+    Bez3 b = BEZ3_V2(pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4]);
 
-    draw_bezier_poly;
+    bez3_draw b;
 }
 
 proc draw_vertline x {
