@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 3;
+        pe_add_pts 4;
     }
 
     forever {
@@ -54,7 +54,7 @@ proc render {
 
     set_pen_size 1;
     set_pen_color "#FF0000";
-    FILL_TRI_V2(pe_pts[1], pe_pts[2], pe_pts[3]);
+    FILL_QUAD_V2(pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4]);
 
     set_pen_color "#0000FF";
 }
