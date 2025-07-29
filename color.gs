@@ -381,7 +381,7 @@ func HEX_to_CBGBG(hex) cCBGBG {
     return RGBA_to_CBGBG(HEX_to_RGBA($hex));
 }
 
-%define SET_PEN_COLOR_HEX(hex) set_pen_color "#" & hex
+%define SET_PEN_COLOR_HEX(hex) set_pen_color "0x" & hex
 # for hex, u should probably just use the normal pen color block
 
 proc set_stamp_color_HEX c {
