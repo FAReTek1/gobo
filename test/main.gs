@@ -62,7 +62,7 @@ proc render {
 
     pos p = POS_CIRCA(c, d);
 
-    fill_regply p, abs((pe_pts[4].x + pe_pts[4].y) // 15);
+    draw_crescent pe_circle(1, 2), pe_circle(3, 4);
 
     set_pen_color "#0000FF";
 }
