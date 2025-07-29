@@ -121,3 +121,46 @@ func nbez_casteljau(t) Vec2 {
     }
     return _nbez_casteljau[1];
 }
+
+# get nbezier using binomial coefs. only works for 0 <= t <= 1
+func nbez_get(t) Vec2 {
+    binomial_cache_row length nbezier - 1;
+    local Vec2 ret = Vec2(0, 0);
+    local i = 1;
+    repeat length nbezier {
+        local coef = binomial_cache[i] * POW($t, i - 1) * POW(1 - $t, length nbezier - i);
+        # this can be adjusted for a weighted nbezier
+        ret.x += coef * nbezier[i].x;
+        ret.y += coef * nbezier[i].y;
+        i++;
+    }
+    return ret;
+}
+
+proc nbez_draw res=30 {
+    V2_GOTO(nbezier[1]);
+    pen_down;
+
+    local t = 0;
+    repeat $res {
+        t += 1 / $res;
+        local Vec2 p = nbez_get(t);
+        V2_GOTO(p);
+    }
+    pen_up;
+}
+
+# use casteljau's algorithm
+proc nbez_drawc start=0, end=1, res=30 {
+    local Vec2 sp = nbez_casteljau($start);
+    V2_GOTO(sp);
+    pen_down;
+
+    local t = $start;
+    repeat $res {
+        t += ($end - $start) / $res;
+        local Vec2 p = nbez_casteljau(t);
+        V2_GOTO(p);
+    }
+    pen_up;
+}

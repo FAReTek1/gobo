@@ -9,6 +9,8 @@ costumes "../assets/size0.svg" as "fenceless.gs//size0",
 
 %define _FNC_HACK_SWITCH_COSTUME_FOR_SIZE(s) switch_costume "fenceless.gs//size" & (s < 100) + (s < 1); set_size s
 
+%define FNC_POS_HACK switch_costume "fenceless.gs//size0"; set_size "Infinity"
+
 proc fnc_set_size size {
     local old_costume = costume_number();
     _FNC_HACK_SWITCH_COSTUME_FOR_SIZE($size);
@@ -18,8 +20,7 @@ proc fnc_set_size size {
 proc fnc_goto_set_size x, y, size {
     local old_costume = costume_number();
 
-    switch_costume "fenceless.gs//size0";
-    set_size "Infinity";
+    FNC_POS_HACK;
     goto $x, $y;
 
     _FNC_HACK_SWITCH_COSTUME_FOR_SIZE($size);

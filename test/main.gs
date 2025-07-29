@@ -31,8 +31,6 @@ onflag {
 }
 
 proc render {
-    set_pen_size 1;
-    set_pen_color "#0000FF";
     delete nbezier;
 
     i = 1;
@@ -41,14 +39,14 @@ proc render {
         i++;
     }
 
-    t = 0;
-    repeat 31 {
-        Vec2 p = nbez_casteljau(t);
-        V2_GOTO(p);
-        pen_down;
-        t += 1.0 / 30.0;
-    }
-    pen_up;
+    FNC_POS_HACK;
+    set_pen_size 3;
+    set_pen_color "#000000";
+    nbez_draw;
+    
+    set_pen_size 1;
+    set_pen_color "#0000FF";
+    nbez_drawc -1, 2, 60;
 }
 
 proc draw_vertline x {
