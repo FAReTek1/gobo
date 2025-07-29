@@ -421,7 +421,7 @@ func clip_cybeck (Line2 l) Line2 {
 # --- --- --- --- --- --- --- --- --- --- #
 # Sutherland-Hodgman algorithm
 # Based on https://www.geeksforgeeks.org/polygon-clipping-sutherland-hodgman-algorithm/
-
+# TODO: fix suthodgeman and cnc, improve code style of cyrus beck
 
 list Node slhd_clip_poly;
 list Node slhd_poly_points;
