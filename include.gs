@@ -30,9 +30,11 @@
 %include ..\stretch
 %include ..\pointengine
 %include ..\bezier2
-%include ..\clip
 
 %include ..\blur
 %include ..\f3d
 %include ..\cosfx
 %include ..\bezply
+
+%include ..\pengine
+%include ..\clip
