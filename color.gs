@@ -5,7 +5,7 @@
 # %include ..\math
 
 # TODO: add macro versions of stamping/pencolor setting
-# TODO: add a coonditional compilation to store the current pen colour
+# TODO: add a coonditional compilation to store the current pen colour - what about using a macro hook?
 # TODO: testing
 ############################################ structs ############################################
 
