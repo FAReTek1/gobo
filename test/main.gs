@@ -33,7 +33,14 @@ onflag {
 proc render {
     set_pen_size 1;
     set_pen_color "#0000FF";
-    bez2_draw BEZ2_V2(pe_pts[1], pe_pts[2], pe_pts[3]);
+    delete quad_bezier_polygon;
+    i = 1;
+    repeat length pe_pts {
+        add pe_pts[i] to quad_bezier_polygon;
+        i++;
+    }
+
+    draw_bezier_poly;
 }
 
 proc draw_vertline x {

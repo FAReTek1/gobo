@@ -31,3 +31,4 @@
 
 %include ..\f3d
 %include ..\cosfx
+%include ..\bezply
