@@ -1030,6 +1030,7 @@ proc fill_miter_arc Line2 l1, Line2 l2, th {
 ###################### stlf ######################
 costumes "../assets/pengine/stlf/*.svg";
 
+# costumes by sockeye-d, original program by @sockeye-d
 # Uh, why doesn't this use a line?
 proc STLF Line2 l, th, style="stlf1", cap="stlf3" {
     local dist = LINE2_LENGTH($l);
