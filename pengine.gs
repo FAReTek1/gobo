@@ -121,6 +121,22 @@ proc stamp_offset Vec2 dn, {
     cstamp;
     fnc_change_xy -$dn.x, -$dn.y;
 }
+proc draw_vert_line x {
+    if $x == "" + $x {
+        goto $x, -180;
+        pen_down;
+        goto $x, 180;
+        pen_up;
+    }
+}
+proc draw_horz_line y {
+    if $x == "" + $x {
+        goto -240, $y;
+        pen_down;
+        goto 240, $y;
+        pen_up;
+    }
+}
 
 ###################### arc ######################
 # TODO: put these into costume folders...

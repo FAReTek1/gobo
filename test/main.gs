@@ -69,13 +69,3 @@ proc render {
     set_ps_color_HEX "00FF00";
     fill_miter_arc l1, l2, h;
 }
-
-
-proc draw_vertline x {
-    if $x == "" + $x {
-        goto $x, -180;
-        pen_down;
-        goto $x, 180;
-        pen_up;
-    }
-}
