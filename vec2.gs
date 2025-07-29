@@ -346,3 +346,6 @@ func v2_dircc(Vec2 v) {return V2_DIR($v);}
 # this would work better if the macro bug is fixed
 %define V2_ROT(v, t) MAT2_MUL_V2(MAT2_ROTATION(t), v)
 %define V2_ROT_C(v, c, t) V2_ADD(MAT2_MUL_V2(MAT2_ROTATION(t), V2_SUB(v, c)), c)
+
+%define V2_RAND(x, y) Vec2(random(-x,x), random(-y,y))
+%define V2_RANDSCR() V2_RAND(240, 180)

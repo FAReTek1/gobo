@@ -118,3 +118,9 @@ proc pe_clear_pts {
     delete pe_pts;
     delete pe_colors;
 }
+
+proc pe_add_pts ct, color="" {
+    repeat $ct {
+        pe_add_pt V2_RANDSCR(), $color;
+    }
+}
