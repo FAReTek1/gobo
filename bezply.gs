@@ -6,14 +6,14 @@ proc draw_bezier_poly t=0.5, res=30 {
     local j = length quad_bezier_polygon;
 
     repeat length quad_bezier_polygon {
-        local Vec2 p0 = V2_LERP(quad_bezier_polygon[j], quad_bezier_polygon[i], $t);
-        local Vec2 p1 = quad_bezier_polygon[i];
-        local Vec2 p2 = V2_LERP(quad_bezier_polygon[i], quad_bezier_polygon[(i) % length quad_bezier_polygon + 1], $t);
-        
-        bez2_draw Bez2(
-            p0.x, p0.y,
-            p1.x, p1.y,
-            p2.x, p2.y
+        bez2_draw BEZ2_V2(
+            V2_LERP(quad_bezier_polygon[j], 
+                    quad_bezier_polygon[i], $t),
+
+            quad_bezier_polygon[i],
+            
+            V2_LERP(quad_bezier_polygon[i], 
+                    quad_bezier_polygon[(i) % length quad_bezier_polygon + 1], $t)
         ), $res;
 
         j = i;
