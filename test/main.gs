@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 4;
+        pe_add_pts 3;
     }
 
     forever {
@@ -54,17 +54,11 @@ proc render {
 
     set_pen_size 1;
     set_ps_color_HEX "9900FF00";
+    pos p = pe_pos(1, 2);
 
-    Circle c = pe_circle(1, 2);
-    Vec2 cc = V2_CIRC(c);
+    h = sdf_line2(pe_line(1, 2), pe_pts[3]) / p.s;
 
-    d = V2_DIR_TO(pe_pts[3], cc);
-
-    pos p = POS_CIRCA(c, d);
-
-    fill_dw_line_perfect pe_circle(1, 2), pe_circle(3, 4);
-
-    set_pen_color "#0000FF";
+    fill_ellipse p, Vec2(1, h);
 }
 
 
