@@ -52,7 +52,7 @@ proc render {
     add pe_pts[2] to slhd_poly_points;
     add pe_pts[3] to slhd_poly_points;
 
-    gen_slhd_clip_regply 5, 100;
+    gen_slhd_clip_regply 5, 100, timer() * 90;
     set_pen_color "#AAAAFF";
     DRAW_V2_LIST(slhd_clip_poly);
     set_pen_color "0x5500FF00";
