@@ -31,7 +31,7 @@ func plr_to_v2(Polar s) {return PLR_TO_V2($s);}
 func v2_to_plr(Vec2 s) {return V2_TO_PLR($s);}
 
 ###################### Line ######################
-%define _LINE2FILL(a) Line2(a, a, a, a)
+%define LINE2_FILL(a) Line2(a, a, a, a)
 %define LINE2_V2(p1,p2) Line2(p1.x, p1.y, p2.x, p2.y)
 func line2_v2(Vec2 p1, Vec2 p2) Line2 {return LINE2_V2($p1, $p2);}
 
@@ -81,7 +81,7 @@ func line2_intersect_circ(Line2 l, Circle c) Line2 {
         local discrim = $c.r * $c.r - ($l.x1 - $c.x) * ($l.x1 - $c.x);
 
         if discrim < 0 {
-            return _LINE2FILL("NaN");
+            return LINE2_FILL("NaN");
         } else {
             return Line2(
                 $l.x1,
@@ -97,7 +97,7 @@ func line2_intersect_circ(Line2 l, Circle c) Line2 {
 
         local discrim = $c.r * $c.r * (m * m + 1) - c * c;
         if discrim < 0 {
-            return _LINE2FILL("NaN");
+            return LINE2_FILL("NaN");
 
         } else {
             local x1 = (sqrt(discrim) - m * c) / (1 + m * m);
@@ -145,11 +145,11 @@ func circ_intersect(Circle c1, Circle c2) Line2 {
     local disquared = dx * dx + dy * dy;
 
     if disquared > ($c1.r + $c2.r) * ($c1.r + $c2.r) {
-        return _LINE2FILL(CircIntersectCases.notouch);
+        return LINE2_FILL(CircIntersectCases.notouch);
     }
 
     if disquared < ($c1.r - $c2.r) * ($c1.r - $c2.r) {
-        return _LINE2FILL(CircIntersectCases.circinside);
+        return LINE2_FILL(CircIntersectCases.circinside);
     }
 
     local dist = sqrt(disquared);

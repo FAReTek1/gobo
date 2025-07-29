@@ -85,7 +85,7 @@ proc pointengine_tick {
 
 # Utilities for generating shapes from point indecies
 
-func circle_by_idx(i1, i2) Circle {
+func pe_circle(i1, i2) Circle {
     return Circle(
         (pe_pts[$i1].x + pe_pts[$i2].x) / 2,
         (pe_pts[$i1].y + pe_pts[$i2].y) / 2,
@@ -93,11 +93,33 @@ func circle_by_idx(i1, i2) Circle {
     );
 }
 
-func line_by_idx(i1, i2) Line2 {
+func pe_line(i1, i2) Line2 {
     return LINE2_V2(pe_pts[$i1], pe_pts[$i2]);
 }
 
-func pos_by_idx(i1, i2) pos {
+func pe_box(i1, i2, minmax=true) Box {
+    if $minmax {
+        if pe_pts[$i1].x < pe_pts[$i2].x {
+            local xmin = pe_pts[$i1].x;
+            local xmax = pe_pts[$i2].x;
+        } else {
+            local xmin = pe_pts[$i2].x;
+            local xmax = pe_pts[$i1].x;
+        }
+        if pe_pts[$i1].y < pe_pts[$i2].y {
+            local ymin = pe_pts[$i1].y;
+            local ymax = pe_pts[$i2].y;
+        } else {
+            local ymin = pe_pts[$i2].y;
+            local ymax = pe_pts[$i1].y;
+        }
+        return Box(xmin, ymin, xmax, ymax);
+    } else {
+        return Box(pe_pts[$i1].x, pe_pts[$i1].y, pe_pts[$i2].x, pe_pts[$i2].y);
+    }
+}
+
+func pe_pos(i1, i2) pos {
     return pos(
         pe_pts[$i1].x,
         pe_pts[$i1].y,

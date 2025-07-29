@@ -39,9 +39,27 @@ onflag {
     }                                       \
     pen_up;
 
+%define LINE2_DRAW(l) goto l.x1, l.y1; pen_down; goto l.x2, l.y2; pen_up
+%define BOX_DRAW(b)             \
+        goto b.xmin, b.ymin;    \
+        pen_down;               \
+        goto b.xmin, b.ymax;    \
+        goto b.xmax, b.ymax;    \
+        goto b.xmax, b.ymin;     \
+        goto b.xmin, b.ymin;    \
+        pen_up
+
 proc render {
     set_pen_size 1;
-    local GRAPH_EXPR(smooth_min(x, x / abs(x) * x * x / 40));
+    Line2 l1 = pe_line(1, 2);
+    Box b = pe_box(3, 4);
+    Line2 clip = cohen_sutherland(l1, b);
+
+    set_pen_color "#FF0000";
+    LINE2_DRAW(l1);
+    BOX_DRAW(b);
+    set_pen_color "#0000FF";
+    LINE2_DRAW(clip);
 }
 
 proc draw_vertline x {
