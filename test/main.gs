@@ -56,7 +56,7 @@ proc render {
     set_ps_color_HEX "9900FF00";
 
     Line2 l = pe_line(1, 2);
-    set_pen_size abs(sdf_line_seg(l, pe_pts[3])) * 2;
+    set_pen_size sdf_line_seg(l, pe_pts[3]) * 2;
     LINE2_DRAW(l);
 }
 
