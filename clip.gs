@@ -2,10 +2,10 @@
 
 # Circle-ngon clipper based on wolther-scripts's clipper
 # Ngon passed in as list
-list Node cnc_ngon;
+list Vec2 cnc_ngon;
 # Internal lists used by circle-ngon clip for output
-list Node _cnc_buffer1;
-list Node _cnc_buffer2;
+list Vec2 _cnc_buffer1;
+list Vec2 _cnc_buffer2;
 
 proc _cnc_inr_circle_line Circle c, Line2 l {
     if $l.x1 == $l.x2 {
@@ -13,13 +13,13 @@ proc _cnc_inr_circle_line Circle c, Line2 l {
         if m != 0 {
             local y = $c.y + m;
             if (y - $l.y1) * (y - $l.y2) <= 0 {
-                add Node{x: $l.x1, y: y} to _cnc_buffer1;
-                add Node{x: $l.x1, y: y} to _cnc_buffer2;
+                add Vec2{x: $l.x1, y: y} to _cnc_buffer1;
+                add Vec2{x: $l.x1, y: y} to _cnc_buffer2;
             }
             y = $c.y - m;
             if (y - $l.y1) * (y - $l.y2) <= 0 {
-                add Node{x: $l.x1, y: y} to _cnc_buffer1;
-                add Node{x: $l.x1, y: y} to _cnc_buffer2;
+                add Vec2{x: $l.x1, y: y} to _cnc_buffer1;
+                add Vec2{x: $l.x1, y: y} to _cnc_buffer2;
             }
 
         }
@@ -39,12 +39,12 @@ proc _cnc_inr_circle_line Circle c, Line2 l {
 
             local x = (b + t) / (-2 * a);
             if (((x + $c.x) - $l.x2) * c <= 0) and ((x + $c.x) - $l.x1) * c >= 0 {
-                add Node{
+                add Vec2{
                     x: x + $c.x,
                     y: m * x + i + $c.y
                 } to _cnc_buffer1;
 
-                add Node{
+                add Vec2{
                     x: x + $c.x,
                     y: m * x + i + $c.y
                 } to _cnc_buffer2;
@@ -52,12 +52,12 @@ proc _cnc_inr_circle_line Circle c, Line2 l {
 
             x = (t - b) / (2 * a);
             if (((x + $c.x) - $l.x2) * c <= 0) and ((x + $c.x) - $l.x1) * c >= 0 {
-                add Node{
+                add Vec2{
                     x: x + $c.x,
                     y: m * x + i + $c.y
                 } to _cnc_buffer1;
                 
-                add Node{
+                add Vec2{
                     x: x + $c.x,
                     y: m * x + i + $c.y
                 } to _cnc_buffer2;
@@ -69,9 +69,9 @@ proc _cnc_inr_circle_line Circle c, Line2 l {
 func _cnc_inr(dx, dy, r) {
     return $dx * $dx + $dy * $dy < $r * $r;
 }
-
+# goes clockwise
 proc circle_ngon_clip Circle c {
-    Circle cnc_circle = $c;
+    Circle cnc_circle = Circle($c.x, $c.y, $c.r * 2);
 
     local i = 1;
     repeat length cnc_ngon {
@@ -108,7 +108,7 @@ proc circle_ngon_clip Circle c {
             add cnc_ngon[j] to _cnc_buffer1;
         }
         if (current == 0) or (prev == 0) {
-            _cnc_inr_circle_line $c, node_join(cnc_ngon[j], cnc_ngon[i]);
+            _cnc_inr_circle_line $c, LINE2_V2(cnc_ngon[j], cnc_ngon[i]);
         }
         
         prev = current;
@@ -126,7 +126,7 @@ proc circle_ngon_clip Circle c {
             local ny = (cnc_ngon[j].x - cnc_ngon[i].x) * flip;
             local nv = nx * cnc_ngon[i].x + ny * cnc_ngon[i].y;
             if nx * $c.x + ny * $c.y < nv {
-                add Node{x: "OUT POLY", y: "OUT POLY"} to _cnc_buffer1;
+                add Vec2{x: "OUT POLY", y: "OUT POLY"} to _cnc_buffer1;
                 stop_this_script;
             }
 
@@ -135,6 +135,55 @@ proc circle_ngon_clip Circle c {
         }
     }
 }
+
+proc _cnc_segment_by_coords Vec2 p1, Vec2 p2 {
+    local d1 = V2_DIR_TO($p1, V2_CIRC(cnc_circle)) % 360;
+    local d2 = V2_DIR_TO($p2, V2_CIRC(cnc_circle)) % 360;
+
+    if d1 != d2 {
+        if _cnc_flip == 1 {
+            if d1 < d2 {
+                fill_segment POS_CIRCD(cnc_circle, d1), d2 - d1;
+            } else {
+                fill_segment POS_CIRCD(cnc_circle, d1 - 360), d2 - (d1 - 360);
+            }
+        } else {
+            if d1 < d1 {
+                fill_segment POS_CIRCD(cnc_circle, d2), d1 - d2;
+            } else {
+                fill_segment POS_CIRCD(cnc_circle, d2 - 360), d1 - (d2 - 360);
+            }
+        }
+    }
+}
+
+proc render_cnc {
+    if _cnc_buffer1[1].x != "OUT POLY" {
+        if length _cnc_buffer1 == 0 {
+            fill_circle Circle(cnc_circle.x, cnc_circle.y, cnc_circle.r / 2);
+            
+        } else {
+            local i = 2;
+            repeat length _cnc_buffer1 - 2 {
+                fill_tri 
+                _cnc_buffer1[1].x, _cnc_buffer1[1].y,
+                _cnc_buffer1[i].x, _cnc_buffer1[i].y,
+                _cnc_buffer1[i + 1].x, _cnc_buffer1[i + 1].y;
+                i++;
+            }
+            i = 1 + (_cnc_first == 0);
+            repeat (length _cnc_buffer2 / 2) - (1 - _cnc_first) {
+                _cnc_segment_by_coords _cnc_buffer2[i], _cnc_buffer2[i + 1];
+                i += 2;
+            }
+            if _cnc_first == 0 {
+                _cnc_segment_by_coords _cnc_buffer2[i], _cnc_buffer2[1];
+            }
+        }
+
+    }
+}
+
 
 # --- --- --- --- --- --- --- --- --- --- #
 # Cohen-Sutherland line clipper

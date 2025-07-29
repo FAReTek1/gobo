@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 6;
+        pe_add_pts 5;
     }
 
     forever {
@@ -43,20 +43,23 @@ onflag {
 proc render {
     FNC_POS_HACK;
 
+    delete cnc_ngon;
+    i = 3;
+    repeat length pe_pts - 2 {
+        add pe_pts[i] to cnc_ngon;
+        i++;
+    }
+
+    set_pen_color "#000000";
     set_pen_size 1;
+
+    Circle c = pe_circle(1, 2);
+    draw_circle c;
+
     set_pen_color "#0000FF";
-    FILL_TRI_V2(pe_pts[1], pe_pts[2], pe_pts[3]);
+    DRAW_V2_LIST(cnc_ngon);
 
-    delete slhd_poly_points;
-    add pe_pts[1] to slhd_poly_points;
-    add pe_pts[2] to slhd_poly_points;
-    add pe_pts[3] to slhd_poly_points;
-
-    gen_slhd_clip_regply 5, 100, timer() * 90;
-    set_pen_color "#AAAAFF";
-    DRAW_V2_LIST(slhd_clip_poly);
-    set_pen_color "0x5500FF00";
-
-    clip_slhd;
-    FILL_V2_LIST(slhd_new_poly);    
+    set_ps_color_HEX "5500FF00";
+    circle_ngon_clip c;
+    render_cnc;
 }
