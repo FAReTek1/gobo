@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 4;
+        pe_add_pts 6;
     }
 
     forever {
@@ -44,19 +44,19 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    pos p = pe_pos(1, 2);
+    set_pen_color "#0000FF";
+    FILL_TRI_V2(pe_pts[1], pe_pts[2], pe_pts[3]);
 
-    Line2 l1 = pe_line(1, 2);
-    Line2 l2 = pe_line(2, 3);
+    delete slhd_poly_points;
+    add pe_pts[1] to slhd_poly_points;
+    add pe_pts[2] to slhd_poly_points;
+    add pe_pts[3] to slhd_poly_points;
 
-    h1 = 2 * abs(sdf_line_seg(pe_line(1, 2), pe_pts[4]));
-    h2 = 2 * abs(sdf_line_seg(pe_line(2, 3), pe_pts[4]));
-    h = h1; # MIN(h1, h2);
-    set_pen_size h;
+    gen_slhd_clip_regply 5, 100;
+    set_pen_color "#AAAAFF";
+    DRAW_V2_LIST(slhd_clip_poly);
+    set_pen_color "0x5500FF00";
 
-    set_pen_color "0x550000FF";
-    LINE2_DRAW(l1);
-    # LINE2_DRAW(l2);
-    set_ps_color_HEX "00FF00";
-    STLF l1, h;
+    clip_slhd;
+    FILL_V2_LIST(slhd_new_poly);    
 }

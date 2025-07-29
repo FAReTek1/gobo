@@ -423,31 +423,23 @@ func clip_cybeck (Line2 l) Line2 {
 # Based on https://www.geeksforgeeks.org/polygon-clipping-sutherland-hodgman-algorithm/
 # TODO: fix suthodgeman and cnc, improve code style of cyrus beck
 
-list Node slhd_clip_poly;
-list Node slhd_poly_points;
+list Vec2 slhd_clip_poly;
+list Vec2 slhd_poly_points;
 # These are meant to be clockwise, not anti-clockwise
-list Node slhd_new_poly;
+list Vec2 slhd_new_poly;
 
-proc add_slhd_clip_point Node p {
-    add $p to slhd_clip_poly;
-}
-
-proc gen_slhd_clip_regply side, r, dir{
+proc gen_slhd_clip_regply side, r, dir=0 {
     delete slhd_clip_poly;
     local angle = $dir;
 
     repeat $side {
-        add_slhd_clip_point Node{
+        add Vec2{
             x: $r * sin(angle),
             y: $r * cos(angle)
-        };
+        } to slhd_clip_poly;
 
         angle += 360 / $side;
     }
-}
-
-proc add_slhd_poly_point Node p {
-    add $p to slhd_poly_points;
 }
 
 proc _slhd_clip Line2 l{
@@ -462,8 +454,8 @@ proc _slhd_clip Line2 l{
         # i and k form a line in polygon
         local k = i % poly_size + 1;
 
-        local Node ip = slhd_poly_points[i]; # really is pt #i
-        local Node kp = slhd_poly_points[k];
+        local Vec2 ip = slhd_poly_points[i]; # really is pt #i
+        local Vec2 kp = slhd_poly_points[k];
 
         # Calculating position of first point with regards to the clipper line
         local i_pos = ($l.x2 - $l.x1) * (ip.y - $l.y1) - ($l.y2 - $l.y1) * (ip.x - $l.x1);
@@ -480,7 +472,7 @@ proc _slhd_clip Line2 l{
         # Case 2: When only first point is outside
         elif i_pos >= 0 and k_pos < 0 {
             # Point of intersection with edge and the second point is added
-            add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
+            add line2_intersect($l, LINE2_V2(ip, kp)) to slhd_new_poly;
             add kp to slhd_new_poly;
             new_poly_size += 2;
         }
@@ -488,7 +480,7 @@ proc _slhd_clip Line2 l{
         # Case 3: When only second point is outside
         elif i_pos < 0 and k_pos >= 0 {
             # Only point of intersection with edge is added
-            add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
+            add line2_intersect($l, LINE2_V2(ip, kp)) to slhd_new_poly;
             new_poly_size ++;
         } else {
             # Case 4: When both points are outside
@@ -519,7 +511,7 @@ proc clip_slhd {
         local k = i % clip_size + 1;
 
         # We pass the current array of vertices, it's size and the end points of the selected clipper line
-        _slhd_clip join_pt2Ds(slhd_clip_poly[i], slhd_clip_poly[k]);
+        _slhd_clip LINE2_V2(slhd_clip_poly[i], slhd_clip_poly[k]);
 
         i ++;
     }

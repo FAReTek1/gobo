@@ -428,104 +428,96 @@ func clip_cybeck (Line l) Line {
 # Based on https://www.geeksforgeeks.org/polygon-clipping-sutherland-hodgman-algorithm/
 
 
-list Node slhd_clip_poly;
-list Node slhd_poly_points;
+list Vec2 slhd_clip_poly;
+list Vec2 slhd_poly_points;
 # These are meant to be clockwise, not anti-clockwise
-list Node slhd_new_poly;
+list Vec2 slhd_new_poly;
 
-proc add_slhd_clip_point Node p {
-    add $p to slhd_clip_poly;
-}
-
-proc gen_slhd_clip_regply side, r, dir{
+proc gen_slhd_clip_regply side, r, dir=0 {
     delete slhd_clip_poly;
     local angle = $dir;
 
     repeat $side {
-        add_slhd_clip_point Node{
+        add Vec2{
             x: $r * sin(angle),
             y: $r * cos(angle)
-        };
+        } to slhd_clip_poly;
 
         angle += 360 / $side;
     }
 }
 
-proc add_slhd_poly_point Node p {
-    add $p to slhd_poly_points;
-}
+# proc _slhd_clip Line l{
+#     delete slhd_new_poly;
 
-proc _slhd_clip Line l{
-    delete slhd_new_poly;
+#     local new_poly_size = 0;
+#     local poly_size = length slhd_poly_points;
 
-    local new_poly_size = 0;
-    local poly_size = length slhd_poly_points;
+#     # (ix,iy),(kx,ky) are the co-ordinate values of the points
+#     local i = 1;
+#     repeat poly_size {
+#         # i and k form a line in polygon
+#         local k = i % poly_size + 1;
 
-    # (ix,iy),(kx,ky) are the co-ordinate values of the points
-    local i = 1;
-    repeat poly_size {
-        # i and k form a line in polygon
-        local k = i % poly_size + 1;
+#         local Vec2 ip = slhd_poly_points[i]; # really is pt #i
+#         local Vec2 kp = slhd_poly_points[k];
 
-        local Node ip = slhd_poly_points[i]; # really is pt #i
-        local Node kp = slhd_poly_points[k];
+#         # Calculating position of first point with regards to the clipper line
+#         local i_pos = ($l.x2 - $l.x1) * (ip.y - $l.y1) - ($l.y2 - $l.y1) * (ip.x - $l.x1);
+#         # Calculating position of second point w.r.t. clipper line
+#         local k_pos = ($l.x2 - $l.x1) * (kp.y - $l.y1) - ($l.y2 - $l.y1) * (kp.x - $l.x1);
 
-        # Calculating position of first point with regards to the clipper line
-        local i_pos = ($l.x2 - $l.x1) * (ip.y - $l.y1) - ($l.y2 - $l.y1) * (ip.x - $l.x1);
-        # Calculating position of second point w.r.t. clipper line
-        local k_pos = ($l.x2 - $l.x1) * (kp.y - $l.y1) - ($l.y2 - $l.y1) * (kp.x - $l.x1);
+#         # Case 1 : When both points are inside
+#         if i_pos < 0 and k_pos < 0 {
+#             # Only second point is added
+#             add kp to slhd_new_poly;
+#             new_poly_size ++;
+#         } 
 
-        # Case 1 : When both points are inside
-        if i_pos < 0 and k_pos < 0 {
-            # Only second point is added
-            add kp to slhd_new_poly;
-            new_poly_size ++;
-        } 
+#         # Case 2: When only first point is outside
+#         elif i_pos >= 0 and k_pos < 0 {
+#             # Point of intersection with edge and the second point is added
+#             add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
+#             add kp to slhd_new_poly;
+#             new_poly_size += 2;
+#         }
 
-        # Case 2: When only first point is outside
-        elif i_pos >= 0 and k_pos < 0 {
-            # Point of intersection with edge and the second point is added
-            add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
-            add kp to slhd_new_poly;
-            new_poly_size += 2;
-        }
+#         # Case 3: When only second point is outside
+#         elif i_pos < 0 and k_pos >= 0 {
+#             # Only point of intersection with edge is added
+#             add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
+#             new_poly_size ++;
+#         } else {
+#             # Case 4: When both points are outside
+#             # No points are added
+#         }
+#         i ++;
+#     }
 
-        # Case 3: When only second point is outside
-        elif i_pos < 0 and k_pos >= 0 {
-            # Only point of intersection with edge is added
-            add lines_intersect($l, join_Nodes(ip, kp)) to slhd_new_poly;
-            new_poly_size ++;
-        } else {
-            # Case 4: When both points are outside
-            # No points are added
-        }
-        i ++;
-    }
+#     # Copying new points into original array and changing the # of vertices
+#     poly_size = new_poly_size;
+#     delete slhd_poly_points;
+#     local i = 1;  # i is used earlier so we don't **need** to say local
 
-    # Copying new points into original array and changing the # of vertices
-    poly_size = new_poly_size;
-    delete slhd_poly_points;
-    local i = 1;  # i is used earlier so we don't **need** to say local
+#     repeat poly_size {
+#         add slhd_new_poly[i] to slhd_poly_points;
+#         i ++;
+#     }
+# }
 
-    repeat poly_size {
-        add slhd_new_poly[i] to slhd_poly_points;
-        i ++;
-    }
-}
+# proc clip_slhd {
+#     # Input and output are actually lists, so this is a procedure with no args!
+#     local poly_size = length slhd_poly_points;
+#     local clip_size = length slhd_clip_poly;
 
-proc clip_slhd {
-    # Input and output are actually lists, so this is a procedure with no args!
-    local poly_size = length slhd_poly_points;
-    local clip_size = length slhd_clip_poly;
+#     # i and k are two consecutive indexes
+#     local i = 1;
+#     repeat clip_size {
+#         local k = i % clip_size + 1;
 
-    # i and k are two consecutive indexes
-    local i = 1;
-    repeat clip_size {
-        local k = i % clip_size + 1;
+#         # We pass the current array of vertices, it's size and the end points of the selected clipper line
+#         _slhd_clip join_pt2Ds(slhd_clip_poly[i], slhd_clip_poly[k]);
 
-        # We pass the current array of vertices, it's size and the end points of the selected clipper line
-        _slhd_clip join_pt2Ds(slhd_clip_poly[i], slhd_clip_poly[k]);
-
-        i ++;
-    }
-}
+#         i ++;
+#     }
+# }
