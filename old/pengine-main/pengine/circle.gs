@@ -1,23 +1,3 @@
-proc fill_circle Circle c {
-    # literally paint a dot
-    goto $c.x, $c.y;
-    set_pen_size 2 * $c.r;
-    pen_down; pen_up;
-}
-
-proc draw_circle Circle c, res {
-    local angle = 0;
-    goto $c.x, $c.y + $c.r;
-    pen_down;
-
-    repeat $res {
-        angle += 360 / $res;
-        goto $c.x + $c.r * sin(angle), $c.y + $c.r * cos(angle);
-    }
-
-    pen_up;
-}
-
 # Alternate name: fill vesica
 proc clip_circles Circle c1, Circle c2 {
     # render the intersection between 2 circles. TODO: make a struct that this outputs and seperate rendering and clipping

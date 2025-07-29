@@ -320,7 +320,13 @@ proc _inner_pengine_draw_aw pos pos, s2, cosd, sind, rx, ry1, ry2 {
     pen_up;
 }
 
-#
+###################### Circle ######################
+proc fill_circle Circle c {
+    # literally paint a dot
+    goto $c.x, $c.y;
+    set_pen_size 2 * $c.r;
+    pen_du;
+}
 
 proc draw_circle Circle c, res=30 {
     local angle = 0;
