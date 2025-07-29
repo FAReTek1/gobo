@@ -94,3 +94,30 @@ proc bez3_draw Bez3 b, res=30 {
     }
     pen_up;
 }
+
+# nd bezier
+
+list Vec2 nbezier;
+
+# get a point on the bezier using de casteljaus algorithm
+list Vec2 _nbez_casteljau;
+func nbez_casteljau(t) Vec2 {
+    delete _nbez_casteljau;
+    local i = 1;
+    repeat length nbezier {
+        add nbezier[i] to _nbez_casteljau;
+        i++;
+    }
+
+    local l = "";
+    until l == 2 {
+        l = length _nbez_casteljau;
+
+        repeat length _nbez_casteljau - 1 {
+            add V2_LERP(_nbez_casteljau[1], _nbez_casteljau[2], $t) to _nbez_casteljau;
+            delete _nbez_casteljau[1];
+        }
+        delete _nbez_casteljau[1];
+    }
+    return _nbez_casteljau[1];
+}

@@ -10,6 +10,7 @@
 %include ..\time
 %include ..\prime
 
+%include ..\binomial
 %include ..\cmath
 %include ..\calculus
 %include ..\char

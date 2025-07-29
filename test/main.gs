@@ -33,9 +33,22 @@ onflag {
 proc render {
     set_pen_size 1;
     set_pen_color "#0000FF";
-    Bez3 b = BEZ3_V2(pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4]);
+    delete nbezier;
 
-    bez3_draw b;
+    i = 1;
+    repeat length pe_pts {
+        add pe_pts[i] to nbezier;
+        i++;
+    }
+
+    t = 0;
+    repeat 31 {
+        Vec2 p = nbez_casteljau(t);
+        V2_GOTO(p);
+        pen_down;
+        t += 1.0 / 30.0;
+    }
+    pen_up;
 }
 
 proc draw_vertline x {
