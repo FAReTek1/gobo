@@ -324,49 +324,30 @@ onflag {
     };
 }
 
-%define _CBGBG_STAMP(c)                                                                             \
-    if c.g1 < 100 {                                                                                 \
-        set_color_effect c.c;                                                                       \
-        set_brightness_effect c.b1;                                                                 \
-        set_ghost_effect c.g1;                                                                      \
+
+%define CBGBG_STAMP(cbg)                                                                            \
+    if cbg.g1 < 100 {                                                                               \
+        set_color_effect cbg.c;                                                                     \
+        set_brightness_effect cbg.b1;                                                               \
+        set_ghost_effect cbg.g1;                                                                    \
         stamp;                                                                                      \
     }                                                                                               \
-    if c.g2 < 100 {                                                                                 \
-        set_brightness_effect c.b2;                                                                 \
-        set_ghost_effect c.g2;                                                                      \
+    if cbg.g2 < 100 {                                                                               \
+        set_brightness_effect cbg.b2;                                                               \
+        set_ghost_effect cbg.g2;                                                                    \
         stamp;                                                                                      \
     }
-# for some reason, trying to use the above macro in the below procs doesn't seem to work. Very weird
+    
 proc CBGBG_stamp cCBGBG c {
-    if $c.g1 < 100 {                                                                                 \
-        set_color_effect $c.c;                                                                       \
-        set_brightness_effect $c.b1;                                                                 \
-        set_ghost_effect $c.g1;                                                                      \
-        stamp;                                                                                      \
-    }                                                                                               \
-    if $c.g2 < 100 {                                                                                 \
-        set_brightness_effect $c.b2;                                                                 \
-        set_ghost_effect $c.g2;                                                                      \
-        stamp;                                                                                      \
-    }
+    CBGBG_STAMP($c);
 }
 
 proc cstamp {
-    if _stamp_color.g1 < 100 {                                                                                 \
-        set_color_effect _stamp_color.c;                                                                       \
-        set_brightness_effect _stamp_color.b1;                                                                 \
-        set_ghost_effect _stamp_color.g1;                                                                      \
-        stamp;                                                                                      \
-    }                                                                                               \
-    if _stamp_color.g2 < 100 {                                                                                 \
-        set_brightness_effect _stamp_color.b2;                                                                 \
-        set_ghost_effect _stamp_color.g2;                                                                      \
-        stamp;                                                                                      \
-    }
+    CBGBG_STAMP(_stamp_color);
 }
 
 
-%define SET_STAMP_COLOR_CBGBG(c) _stamp_color = c; # this really should be in fullcaps...
+%define SET_STAMP_COLOR_CBGBG(c) _stamp_color = c;
 
 # no cbgbg set color, i dont want to reverse the process
 

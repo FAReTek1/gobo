@@ -17,6 +17,7 @@
 %include ..\ease
 %include ..\base
  
+%include ..\color
 %include ..\vec2
 %include ..\geo2d
 %include ..\sdf
