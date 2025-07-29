@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 3;
+        pe_add_pts 4;
     }
 
     forever {
@@ -53,12 +53,21 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    set_ps_color_HEX "9900FF00";
     pos p = pe_pos(1, 2);
 
-    h = sdf_line2(pe_line(1, 2), pe_pts[3]) / p.s;
+    Line2 l1 = pe_line(1, 2);
+    Line2 l2 = pe_line(2, 3);
 
-    fill_ellipse p, Vec2(1, h);
+    h1 = 2 * abs(sdf_line_seg(pe_line(1, 2), pe_pts[4]));
+    h2 = 2 * abs(sdf_line_seg(pe_line(2, 3), pe_pts[4]));
+    h = MIN(h1, h2);
+    set_pen_size h;
+
+    set_pen_color "#0000FF";
+    LINE2_DRAW(l1);
+    LINE2_DRAW(l2);
+    set_ps_color_HEX "00FF00";
+    fill_miter_arc l1, l2, h;
 }
 
 

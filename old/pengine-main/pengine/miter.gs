@@ -1,4 +1,3 @@
-
 # Miter fillers by @faretek1 on scratch
 proc fill_miter Line l1, Line l2, th {
     # Assume l2.x1, l2.y2 to be equal to l1.x2, l1.y2
