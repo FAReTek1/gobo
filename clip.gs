@@ -565,3 +565,66 @@ proc clip_slhd {
         i ++;
     }
 }
+
+# --- --- --- --- --- --- --- --- --- --- #
+# circle-circle clip into 2 segments
+struct CClipRet {
+    x1, y1, r1, s1, e1,
+    x2, y2, r2, s2, e2
+}
+%define CClipRet(_x1, _y1, _r1, _s1, _e1, _x2, _y2, _r2, _s2, _e2) (CClipRet{   \
+    x1: _x1,                                                                    \
+    y1: _y1,                                                                    \
+    r1: _r1,                                                                    \
+    s1: _s1,                                                                    \
+    e1: _e1,                                                                    \
+    x2: _x2,                                                                    \
+    y2: _y2,                                                                    \
+    r2: _r2,                                                                    \
+    s2: _s2,                                                                    \
+    e2: _e2})
+
+func circ_clip (Circle c1, Circle c2) CClipRet {
+    # return the intersection between 2 circles. 
+    local Line2 isct = circ_intersect($c1, $c2);
+    if isct.x1 == CircIntersectCases.circinside {
+        if $c1.r > $c2.r {
+            return CClipRet($c2.x, $c2.y, $c2.r, "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN");
+        } else {
+            return CClipRet($c1.x, $c1.y, $c1.r, "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN");
+        }
+        
+    } elif isct.x1 != CircIntersectCases.notouch {
+        local d1 = DIR($c2.x, $c2.y, isct.x2, isct.y2);
+        local d2 = DIR($c2.x, $c2.y, isct.x1, isct.y1);
+
+        if d1 < d2 {
+            local pos p1 = pos($c2.x, $c2.y, $c2.r * 2, 180 + d1);
+            local ret_d1 = -360 + (d2 - d1);
+        } else {
+            local pos p1 = pos($c2.x, $c2.y, $c2.r * 2, 180 + d1);
+            local ret_d1 = d2 - d1;
+        }
+
+        d1 = DIR($c1.x, $c1.y, isct.x2, isct.y2);
+        d2 = DIR($c1.x, $c1.y, isct.x1, isct.y1);
+
+        if d1 < d2 {
+            return CClipRet(p1.x, p1.y, p1.s, p1.d, ret_d1, $c1.x, $c1.y, $c1.r * 2, 180 + d2, d1 - d2);
+        } else {
+            return CClipRet(p1.x, p1.y, p1.s, p1.d, ret_d1, $c1.x, $c1.y, $c1.r * 2, 180 + d2, -360 + (d1 - d2));
+        }
+    } else {
+        return CClipRet("NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN", "NaN");
+    }
+}
+proc render_cclip CClipRet c {
+    if $c.s1 == "NaN" {
+        if $c.x1 != "NaN" {
+            fill_circle Circle($c.x1, $c.y1, $c.r1);
+        }
+    } else {
+        fill_segment pos($c.x1, $c.y1, $c.r1, $c.s1), $c.e1;
+        fill_segment pos($c.x2, $c.y2, $c.r2, $c.s2), $c.e2;
+    }
+}

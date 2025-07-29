@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 5;
+        pe_add_pts 4;
     }
 
     forever {
@@ -43,23 +43,15 @@ onflag {
 proc render {
     FNC_POS_HACK;
 
-    delete cnc_ngon;
-    i = 3;
-    repeat length pe_pts - 2 {
-        add pe_pts[i] to cnc_ngon;
-        i++;
-    }
-
-    set_pen_color "#000000";
+    set_pen_color "#0000FF";
     set_pen_size 1;
 
-    Circle c = pe_circle(1, 2);
-    draw_circle c;
+    Circle c1 = pe_circle(1, 2);
+    draw_circle c1;
 
-    set_pen_color "#0000FF";
-    DRAW_V2_LIST(cnc_ngon);
+    Circle c2 = pe_circle(3, 4);
+    draw_circle c2;
 
     set_ps_color_HEX "5500FF00";
-    circle_ngon_clip c;
-    render_cnc;
+    render_cclip circ_clip(c1, c2);
 }
