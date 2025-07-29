@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 4;
+        pe_add_pts 5;
     }
 
     forever {
@@ -50,25 +50,26 @@ onflag {
         pen_up
 
 proc render {
-    set_pen_size 1;
-    Line2 l1 = pe_line(1, 2);
-    Circle c = pe_circle(3, 4);
-    Line2 clip = clip_circle_line(c, l1);
+    FNC_POS_HACK;
 
+    set_pen_size 1;
     set_pen_color "#FF0000";
+    Line2 l1 = pe_line(1, 2);
+    
+    delete cyrus_beck_shape;
+    local i = 3;
+    repeat length pe_pts - 2{
+        add pe_pts[i] to cyrus_beck_shape;
+        i++;
+    }
+
     LINE2_DRAW(l1);
 
-    local a = 0;
-    goto c.x + c.r, c.y;
-    pen_down;
-    repeat 360 {
-        a += 360 / 360;
-        goto c.x + cos(a) * c.r, c.y + sin(a) * c.r;
-    }
-    pen_up;
+    draw_cybck_shape;
 
+    Line2 lc = clip_cybeck(l1);
     set_pen_color "#0000FF";
-    LINE2_DRAW(clip);
+    LINE2_DRAW(lc);
 }
 
 proc draw_vertline x {

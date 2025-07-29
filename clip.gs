@@ -320,20 +320,16 @@ func clip_circle_line (Circle c, Line2 l) Line2 {
 # Cyrus-Beck algorithm
 # Based on https://www.geeksforgeeks.org/line-clipping-set-2-cyrus-beck-algorithm/
 
-list Node cyrus_beck_shape;
+list Vec2 cyrus_beck_shape;
 # List containing vertices of the clipping window (must be convex and anti-clockwise)
 # This is meant to be anti-clockwise, not clockwise
-
-proc add_cybck_point Node p {
-    add $p to cyrus_beck_shape;
-}
 
 proc gen_cybck_regply side, r, dir{
     delete cyrus_beck_shape;
     local angle = $dir;
 
     repeat $side {
-        add_cybck_point Node{
+        add_cybck_point Vec2{
             x: $r * sin(angle),
             y: $r * cos(angle)
         };
@@ -345,14 +341,12 @@ proc gen_cybck_regply side, r, dir{
 proc draw_cybck_shape {
     local i = 1;
     repeat length cyrus_beck_shape {
-        node_goto cyrus_beck_shape[i];
+        V2_GOTO(cyrus_beck_shape[i]);
         pen_down;
-
-        i ++;
+        i++;
     }
 
-    node_goto cyrus_beck_shape[1];
-
+    V2_GOTO(cyrus_beck_shape[1]);
     pen_up;
 }
 
@@ -367,7 +361,7 @@ func clip_cybeck (Line2 l) Line2 {
     local tmax = "Infinity";
     
     repeat n {
-        local Node p = cyrus_beck_shape[i];
+        local Vec2 p = cyrus_beck_shape[i];
 
         # Calculate normals
         local nx = cyrus_beck_shape[i].y - cyrus_beck_shape[i % n + 1].y;
