@@ -37,11 +37,17 @@ func line2_v2(Vec2 p1, Vec2 p2) Line2 {return LINE2_V2($p1, $p2);}
 
 %define LINE2_P1(l) Vec2(l.x1, l.y1)
 %define LINE2_P2(l) Vec2(l.x2, l.y2)
+%define LINE2_LENGTH(l) V2_MAG(LINE2_DV(l))
 
 # returns vector from p1 to p2
 %define LINE2_DV(l) Vec2(l.x2 - l.x1, l.y2 - l.y1)
 %define LINE2_DX(l) (l.x2 - l.x1)
 %define LINE2_DY(l) (l.y2 - l.y1)
+
+# returns vector from p2 to p1
+%define LINE2_DV2(l) Vec2(l.x1 - l.x2, l.y1 - l.y2)
+%define LINE2_DX2(l) (l.x1 - l.x2)
+%define LINE2_DY2(l) (l.y1 - l.y2)
 
 # Check against the sign of this value. If it's equal to 0, it is on the line
 # if it is - or + it is on one side of the line. - and + are opposite sides
