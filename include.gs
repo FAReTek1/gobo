@@ -11,6 +11,7 @@
 %include ..\prime
 
 %include ..\binomial
+%include ..\bounds
 %include ..\cmath
 %include ..\calculus
 %include ..\char

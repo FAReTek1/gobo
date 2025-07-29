@@ -30,23 +30,18 @@ onflag {
     }
 }
 
+%define GRAPH_EXPR(y)                        \
+    x = -240;                               \
+    repeat 481 {                            \
+        fnc_goto x, y;                      \
+        pen_down;                           \
+        x++;                                \
+    }                                       \
+    pen_up;
+
 proc render {
-    delete nbezier;
-
-    i = 1;
-    repeat length pe_pts {
-        add pe_pts[i] to nbezier;
-        i++;
-    }
-
-    FNC_POS_HACK;
-    set_pen_size 3;
-    set_pen_color "#000000";
-    nbez_draw;
-    
     set_pen_size 1;
-    set_pen_color "#0000FF";
-    nbez_drawc -1, 2, 60;
+    local GRAPH_EXPR(smooth_min(x, x / abs(x) * x * x / 40));
 }
 
 proc draw_vertline x {
