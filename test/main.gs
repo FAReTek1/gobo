@@ -55,18 +55,8 @@ proc render {
     set_pen_size 1;
     set_ps_color_HEX "99FF0000";
 
-    Circle c = pe_circle(1, 2);
-    Vec2 cc = V2_CIRC(c);
-
-    d = V2_DIR_TO(pe_pts[3], cc);
-    h = V2_DIST(pe_pts[3], cc) / c.r;
-
-    pos p = POS_CIRCA(c, d);
-
-    draw_circle c;
-    fill_aw p, h;
-
-    set_pen_color "#0000FF";
+    Line2 l = pe_line(1, 2);
+    fill_capped_line l, 30;
 }
 
 proc draw_vertline x {
