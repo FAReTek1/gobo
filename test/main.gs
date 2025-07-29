@@ -52,12 +52,21 @@ onflag {
 proc render {
     set_pen_size 1;
     Line2 l1 = pe_line(1, 2);
-    Box b = pe_box(3, 4);
-    Line2 clip = cohen_sutherland(l1, b);
+    Circle c = pe_circle(3, 4);
+    Line2 clip = clip_circle_line(c, l1);
 
     set_pen_color "#FF0000";
     LINE2_DRAW(l1);
-    BOX_DRAW(b);
+
+    local a = 0;
+    goto c.x + c.r, c.y;
+    pen_down;
+    repeat 360 {
+        a += 360 / 360;
+        goto c.x + cos(a) * c.r, c.y + sin(a) * c.r;
+    }
+    pen_up;
+
     set_pen_color "#0000FF";
     LINE2_DRAW(clip);
 }

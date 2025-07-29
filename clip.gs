@@ -213,7 +213,7 @@ func cohen_sutherland (Line2 l, Box b) Line2 {
 
 # --- --- --- --- --- --- --- --- --- --- #
 # Circle-line clipper -
-func circle_line_clip (Circle c, Line2 l) Line2 {
+func clip_circle_line (Circle c, Line2 l) Line2 {
     # (Probably optimisable) circle-line clipper algorithm by faretek1
     local d1 = DIST($l.x1, $l.y1, $c.x, $c.y);
     local d2 = DIST($l.x2, $l.y2, $c.x, $c.y);
@@ -252,12 +252,13 @@ func circle_line_clip (Circle c, Line2 l) Line2 {
         }
 
     } else {
-        local MxPlusC l_eq = l2d_to_mxc($l);
+        local m = LINE2_GRAD($l);
+        local ic = LINE2_INTC($l, m);
 
         # The following are a, b & c for use with quadratic formula
-        local a = 1 + l_eq.m * l_eq.m;
-        local b = 2 * (l_eq.m * (l_eq.c - $c.y) - $c.x);
-        local c = $c.x * $c.x + (l_eq.c * l_eq.c - ($c.y * (2 * l_eq.c - $c.y))) - $c.r * $c.r; 
+        local a = 1 + m * m;
+        local b = 2 * (m * (ic - $c.y) - $c.x);
+        local c = $c.x * $c.x + (ic * ic - ($c.y * (2 * ic - $c.y))) - $c.r * $c.r; 
         # The brackets were required to prevent goboscript from bracketifying it wrongly
 
         local discrim = b * b - 4 * a * c;
@@ -269,10 +270,10 @@ func circle_line_clip (Circle c, Line2 l) Line2 {
         discrim = sqrt(discrim);
         if d1 > $c.r and d2 > $c.r {
         ret.x1 = (b + discrim) / (-2 * a);
-        ret.y1 = get_mxc_at_x(l_eq, ret.x1);
+        ret.y1 = m * ret.x1 + ic;
         
         ret.x2 = (discrim - b) / (2 * a);
-        ret.y2 = get_mxc_at_x(l_eq, ret.x2);
+        ret.y2 = m * ret.x2 + ic;
         } else {
 
         # 1 in, 1 out
@@ -285,20 +286,20 @@ func circle_line_clip (Circle c, Line2 l) Line2 {
         if d1 > $c.r {
             if t1 < t2 {
                 ret.x1 = x1;
-                ret.y1 = get_mxc_at_x(l_eq, ret.x1);
+                ret.y1 = m * ret.x1 + ic;
             } else {
                 ret.x1 = x2;
-                ret.y1 = get_mxc_at_x(l_eq, ret.x1);
+                ret.y1 = m * ret.x1 + ic;
             }
         } else {
             # This is when d2 > $c.r. we can assume this because not both can be more than $c.r,
             # otherwise we get the above case, and not both can be within, otherwise we get the top case
             if t1 < t2 {
                 ret.x2 = x2;
-                ret.y2 = get_mxc_at_x(l_eq, ret.x2);
+                ret.y2 = m * ret.x2 + ic;
             } else {
                 ret.x2 = x1;
-                ret.y2 = get_mxc_at_x(l_eq, ret.x2);
+                ret.y2 = m * ret.x2 + ic;
             }
         }
         }
