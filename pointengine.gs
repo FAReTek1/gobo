@@ -71,7 +71,7 @@ proc pointengine_render {
             }
         }
 
-        V2_GOTO(p);
+        fnc_v2_goto p;
         pen_du;
 
         i++;
@@ -104,4 +104,17 @@ func pos_by_idx(i1, i2) pos {
         V2_DIST(pe_pts[$i1], pe_pts[$i2]),
         V2_DIR_TO(pe_pts[$i2], pe_pts[$i1])
     );
+}
+
+proc pe_add_pt Vec2 p, color="" {
+    if $color == "" {
+        add pointengine_settings.add_col to pe_colors;
+    } else {
+        add $color to pe_colors;
+    }
+    add $p to pe_pts;
+}
+proc pe_clear_pts {
+    delete pe_pts;
+    delete pe_colors;
 }

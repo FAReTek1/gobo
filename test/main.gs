@@ -13,9 +13,15 @@ costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "str
 hide;
 onflag {
     reset_pes;
-    pointengine_settings.add_key = "a";
-    pointengine_settings.remove_key = "x";
+    # pointengine_settings.add_key = "a";
+    # pointengine_settings.remove_key = "x";
 
+    pe_clear_pts;
+
+    pe_add_pt Vec2(0, 150);
+    pe_add_pt Vec2(-100, 0);
+    pe_add_pt Vec2(25, -30);
+ 
     forever {
         projectenv_fps_tick;
 
@@ -73,13 +79,8 @@ proc render {
 
     set_pen_color "#FF0000";
 
-    i = 2;
-    repeat length pe_pts - 2 {
-        df pe_pts[i], pe_pts[i + 1];
-        i++;
-    }
-    df pe_pts[i], pe_pts[2];
-    
+    fortunes;
+
     pointengine_render;
 }
 
@@ -92,20 +93,7 @@ proc draw_vertline x {
     }
 }
 
-proc df Vec2 f, Vec2 g {
-    local Vec2 f = $f;
-    local Vec2 g = $g;
 
-    local Vec3 soln_p = get_abc_components_of_equation_equating_df_paras(d, f, g);
-    local Vec2 solns = v3p_solve(soln_p);
+proc fortunes {
 
-    draw_vertline solns.x;
-    draw_vertline solns.y;
-
-    fnc_goto -241, 180;
-    repeat 480 {
-        fnc_v2_goto get_directrix_focus_parabola_at(x_position() + 1, d, f);
-        pen_down;
-    }
-    pen_up;
 }
