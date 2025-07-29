@@ -3,6 +3,7 @@
 
 # Blur using fisheye effect
 # Based on https://scratch.mit.edu/projects/918003300
+# TODO: implement ghost calculation macros/funcs like how fwhirl exists
 proc radblur steps, fisheye, ghost {
     repeat $steps {
         # Instead of varying position, we can alter fisheye to create a radial blur instead
