@@ -105,3 +105,20 @@ proc _pengine_quad_fill_intern ina1, inb1, inc, ind, ine1, inf1, inr1, a, b, c, 
 
 # TODO: potentially implement https://scratch.mit.edu/projects/1128076882/ ?
 # using linear algebra from Vec2.gs??
+
+###################### misc ######################
+proc fill_outline th, res {
+    local angle = direction(); 
+    # this way, when the sprite rotates, the outline's circle of stamps rotates as well, 
+    # making it look more natural
+    repeat $res {
+        stamp_offset Node{x: $th * sin(angle), y: $th * cos(angle)};
+        angle += 360 / $res;
+    }
+}
+proc stamp_offset Node dn, {
+    fnc_change_xy $dn.x, $dn.y;
+    cstamp;
+    fnc_change_xy -$dn.x, -$dn.y;
+}
+
