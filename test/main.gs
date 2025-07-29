@@ -53,7 +53,7 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    set_ps_color_HEX "99FF0000";
+    set_ps_color_HEX "9900FF00";
 
     Circle c = pe_circle(1, 2);
     Vec2 cc = V2_CIRC(c);
@@ -62,7 +62,7 @@ proc render {
 
     pos p = POS_CIRCA(c, d);
 
-    draw_crescent pe_circle(1, 2), pe_circle(3, 4);
+    fill_dw_line_perfect pe_circle(1, 2), pe_circle(3, 4);
 
     set_pen_color "#0000FF";
 }

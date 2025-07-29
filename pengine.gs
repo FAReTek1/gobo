@@ -112,11 +112,11 @@ proc fill_outline th, res {
     # this way, when the sprite rotates, the outline's circle of stamps rotates as well, 
     # making it look more natural
     repeat $res {
-        stamp_offset Node{x: $th * sin(angle), y: $th * cos(angle)};
+        stamp_offset Vec2{x: $th * sin(angle), y: $th * cos(angle)};
         angle += 360 / $res;
     }
 }
-proc stamp_offset Node dn, {
+proc stamp_offset Vec2 dn, {
     fnc_change_xy $dn.x, $dn.y;
     cstamp;
     fnc_change_xy -$dn.x, -$dn.y;
@@ -645,3 +645,138 @@ proc fill_crescent Circle c1, Circle c2, res=30 {
                                   $c1.r < $c2.r, 2 * $res + 1;
     }
 }
+###################### dwline ######################
+# Dynamic-width lines defined by 2 circles
+# Inspired by @chooper100 but no code adaption
+# by faretek1
+proc _shapefill_inner_fill_dw_line_fast Circle c1, Circle c2, dx, dy{
+    # Fast line fill, but not 100% accurate
+    local dst = sqrt($dx * $dx + $dy * $dy);
+
+    local vx = $dy / -dst;
+    local vy = $dx / dst;
+
+    local th = $c1.r / 4;
+    set_pen_size $c1.r;
+    goto $c1.x, $c1.y;
+    pen_down;
+
+    local x = $c1.x;
+    local y = $c1.y;
+    local done = false;
+
+    until done {
+        local m = (2 * th - $c1.r) / ($c2.r - $c1.r);
+
+        if m > 1 {
+            done = true;
+            th = th * 2 - $c2.r * 0.5;
+            
+            set_pen_size $c2.r;
+
+            goto x + th * vx, y + th * vy;
+            goto $c2.x, $c2.y;
+            goto x - th * vx, y - th * vy;
+
+            pen_up;
+        } else {
+            local ox = x;
+            local oy = y;
+
+            x = $c1.x + m * $dx;
+            y = $c1.y + m * $dy;
+
+            set_pen_size 2 * th;
+            goto ox + th * vx, oy + th * vy;
+            goto x, y;
+            goto ox - th * vx, oy - th * vy;
+
+            th *= 0.5;
+        }
+    }
+
+}
+
+proc fill_dw_line_fast Circle c1, Circle c2 {
+    if $c1.r == $c2.r {
+        set_pen_size $c1.r * 2;
+        goto $c1.x, $c1.y;
+        pen_down;
+        goto $c2.x, $c2.y;
+        pen_up;
+
+    } elif $c1.r > $c2.r {
+        _shapefill_inner_fill_dw_line_fast Circle{x: $c1.x, y: $c1.y, r: $c1.r * 2},
+                                           Circle{x: $c2.x, y: $c2.y, r: $c2.r * 2},
+                                           $c2.x - $c1.x, $c2.y - $c1.y;
+    } else {
+        _shapefill_inner_fill_dw_line_fast Circle{x: $c2.x, y: $c2.y, r: $c2.r * 2},
+                                           Circle{x: $c1.x, y: $c1.y, r: $c1.r * 2},
+                                           $c1.x - $c2.x, $c1.y - $c2.y;
+    }
+}
+
+# Uses quad fill and tangent calcuation
+# by faretek1
+proc fill_dw_line_perfect Circle c1, Circle c2 {
+    # Fill a dw line using a quad fill
+    if $c1.r == $c2.r {
+        goto $c1.x, $c1.y;
+        set_pen_size $c1.r * 2;
+        pen_down;
+        goto $c2.x, $c2.y;
+        pen_up;
+
+    } elif $c2.r > $c1.r {
+        fill_dw_line_perfect $c2, $c1;
+
+    } else {
+        local ir = ($c1.r - $c2.r);
+        # TODO: change this to a macro when it works
+        local Line2 ps = circ_outer_tangent_points_to_v2(
+                Circle(0, 0, ir),
+                Vec2($c2.x - $c1.x, $c2.y - $c1.y)
+            );
+        
+        if ps.x1 == CircIntersectCases.circinside {
+            goto $c1.x, $c1.y;
+            set_pen_size $c1.r * 2;
+            pen_down;
+            pen_up;
+
+        } elif ps.x1 != CircIntersectCases.notouch {
+            ps.x1 /= ir;
+            ps.y1 /= ir;
+            ps.x2 /= ir;
+            ps.y2 /= ir;
+
+            goto $c1.x, $c1.y;
+            set_pen_size $c1.r * 2;
+            pen_du;
+
+            goto $c2.x, $c2.y;
+            set_pen_size $c2.r * 2;
+            pen_du;
+
+            FILL_QUAD_V2( 
+                Vec2(
+                    $c1.x + ($c1.r - 0.5) * ps.x1,
+                    $c1.y + ($c1.r - 0.5) * ps.y1
+                ),
+                Vec2(
+                    $c2.x + ($c2.r - 0.5) * ps.x1,
+                    $c2.y + ($c2.r - 0.5) * ps.y1
+                ),
+                Vec2(
+                    $c2.x + ($c2.r - 0.5) * ps.x2,
+                    $c2.y + ($c2.r - 0.5) * ps.y2
+                ),
+                Vec2(
+                    $c1.x + ($c1.r - 0.5) * ps.x2,
+                    $c1.y + ($c1.r - 0.5) * ps.y2
+                )
+            );
+        }
+    }
+}
+
