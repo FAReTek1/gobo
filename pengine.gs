@@ -833,6 +833,7 @@ proc fill_dw_line_perfect Circle c1, Circle c2 {
 }
 
 ###################### ellipse ######################
+# by griefercube on scratch
 proc fill_ellipse pos p, Vec2 s, res=4 {
     pen_up;
     if abs($s.x) == abs($s.y) {
