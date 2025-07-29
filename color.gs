@@ -360,17 +360,21 @@ func HEX_to_RGB (hex) cRGBA {
     };
 }
 func HEX_to_RGBA (hex) cRGBA {
-    local a = $hex[7] & $hex[8];
-    if length a < 2 { # if it's a 6-char hex code, make it 100% opaque
-        a = "FF";
+    if length $hex < 8 {
+        return cRGBA(
+            HEX($hex[1] & $hex[2]),
+            HEX($hex[3] & $hex[4]),
+            HEX($hex[5] & $hex[6]),
+            255
+        );
     }
 
-    return cRGBA{
-        r: HEX($hex[1] & $hex[2]),
-        g: HEX($hex[3] & $hex[4]),
-        b: HEX($hex[5] & $hex[6]),
-        a: HEX(a)
-    };
+    return cRGBA(
+        HEX($hex[3] & $hex[4]),
+        HEX($hex[5] & $hex[6]),
+        HEX($hex[7] & $hex[8]),
+        HEX($hex[1] & $hex[2])
+    );
 }
 
 func HEX_to_CBGBG(hex) cCBGBG {
@@ -385,7 +389,7 @@ proc set_stamp_color_HEX c {
 }
 
 proc set_ps_color_HEX c {
-    set_pen_color "#" & $c;
+    set_pen_color "0x" & $c;
     _stamp_color = HEX_to_CBGBG($c);
 }
 
