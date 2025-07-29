@@ -56,7 +56,7 @@ proc render {
     set_ps_color_HEX "99FF0000";
 
     Line2 l = pe_line(1, 2);
-    fill_capped_line l, 30;
+    fill_capped_line l, abs(SDF_LINE2(l, pe_pts[3])) * 2;
 }
 
 proc draw_vertline x {
