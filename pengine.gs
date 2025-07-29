@@ -206,7 +206,7 @@ proc draw_arc pos p, ext, hole, res=30 {
 }
 
 
-proc draw_arc_edge pos p, ext, res {
+proc draw_arc_edge pos p, ext, res=30 {
     goto $p.x + $p.s * sin($p.d), 
          $p.y + $p.s * cos($p.d);
     pen_down;
@@ -413,5 +413,63 @@ proc draw_capped_line Line2 l, th {
     goto $l.x2 - vy, $l.y2 + vx;
     goto $l.x2 + vy, $l.y2 - vx;
     goto $l.x1 + vy, $l.y1 - vx;
+    pen_up;
+}
+
+###################### Segment ######################
+costumes "../assets/pengine/segment/*.svg";
+
+proc fill_segment pos pos, ext {
+    if $ext > 0.703125 {
+        if $ext < 360{
+            local i = floor(ln($ext / 360) / 0.6931471805599453);
+            switch_costume "shapefill segment " & i;
+
+            fnc_goto $pos.x, $pos.y;
+            fnc_set_size $pos.s;
+            point_in_direction $pos.d;
+
+            cstamp;
+
+            i = 360 * antiln(i * 0.6931471805599453);
+            if abs(i - $ext) > 0.0000000000001 {
+                turn_right $ext - i;
+                cstamp;
+                local fin = $pos.d + $ext;
+                local md = $pos.d + $ext / 2;
+
+                FNC_POS_HACK;
+                fill_tri sin($pos.d) * $pos.s / 2 + $pos.x,
+                         cos($pos.d) * $pos.s / 2 + $pos.y,
+                         sin(fin) * $pos.s / 2 + $pos.x,
+                         cos(fin) * $pos.s / 2 + $pos.y,
+                         sin(md) * $pos.s / 2 + $pos.x,
+                         cos(md) * $pos.s / 2 + $pos.y;
+                }
+        } else {
+            goto $pos.x, $pos.y;
+            set_pen_size $pos.s;
+            pen_du;
+        }
+    } elif $ext < -0.703125 {
+        fill_segment pos{x: $pos.x, y: $pos.y, s: $pos.s, d: $pos.d + $ext}, -$ext;
+    } 
+}
+
+proc draw_segment pos p, ext, res=30 {
+    goto $p.x + $p.s * sin($p.d) / 2, 
+         $p.y + $p.s * cos($p.d) / 2;
+    pen_down;
+
+    local angle = $p.d;
+    repeat $res {
+        angle += $ext / $res;
+        goto $p.x + $p.s * sin(angle) / 2,
+             $p.y + $p.s * cos(angle) / 2;
+    }
+
+    goto $p.x + $p.s * sin($p.d) / 2, 
+         $p.y + $p.s * cos($p.d) / 2;
+
     pen_up;
 }

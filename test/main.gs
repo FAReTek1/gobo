@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 3;
+        pe_add_pts 4;
     }
 
     forever {
@@ -53,12 +53,22 @@ proc render {
     FNC_POS_HACK;
 
     set_pen_size 1;
-    set_ps_color_HEX "9900FF00";
+    set_ps_color_HEX "99FF0000";
 
-    Line2 l = pe_line(1, 2);
-    set_pen_size sdf_line_seg(l, pe_pts[3]) * 2;
-    LINE2_DRAW(l);
+    Circle c = pe_circle(1, 2);
+    Vec2 cc = V2_CIRC(c);
+    c.r *= 2;
+
+    d = V2_DIR_TO(pe_pts[3], cc);
+    ext = (V2_DIR_TO(pe_pts[4], cc) - d) % 360;
+
+    pos p = POS_CIRCA(c, d);
+
+    draw_segment p, ext;
+
+    set_pen_color "#0000FF";
 }
+
 
 proc draw_vertline x {
     if $x == "" + $x {
