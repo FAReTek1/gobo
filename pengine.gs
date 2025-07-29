@@ -138,12 +138,22 @@ proc draw_horz_line y {
     }
 }
 
-proc line2_drawp Line2 l {
-    goto $l.x1, $l.y1;
-    pen_du;
-    goto $l.x2, $l.y2;
-    pen_du;
-}
+%define LINE2_DRAWP(l) goto l.x1, l.y1; pen_du; goto l.x2, l.y2; pen_du
+proc line2_drawp Line2 l {LINE2_DRAWP($l);}
+
+%define LINE2_DRAW(l) goto l.x1, l.y1; pen_down; goto l.x2, l.y2; pen_up
+proc line2_draw Line2 l {LINE2_DRAW($l);}
+
+%define BOX_DRAW(b)             \
+        goto b.xmin, b.ymin;    \
+        pen_down;               \
+        goto b.xmin, b.ymax;    \
+        goto b.xmax, b.ymax;    \
+        goto b.xmax, b.ymin;     \
+        goto b.xmin, b.ymin;    \
+        pen_up
+
+proc box_draw Box b {BOX_DRAW($b);}
 
 ###################### arc ######################
 # TODO: put these into costume folders...

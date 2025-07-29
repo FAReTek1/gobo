@@ -30,7 +30,7 @@ onflag {
     }
 }
 
-%define GRAPH_EXPR(y)                        \
+%define GRAPH_EXPR(y)                       \
     x = -240;                               \
     repeat 481 {                            \
         fnc_goto x, y;                      \
@@ -39,15 +39,6 @@ onflag {
     }                                       \
     pen_up;
 
-%define LINE2_DRAW(l) goto l.x1, l.y1; pen_down; goto l.x2, l.y2; pen_up
-%define BOX_DRAW(b)             \
-        goto b.xmin, b.ymin;    \
-        pen_down;               \
-        goto b.xmin, b.ymax;    \
-        goto b.xmax, b.ymax;    \
-        goto b.xmax, b.ymin;     \
-        goto b.xmin, b.ymin;    \
-        pen_up
 
 proc render {
     FNC_POS_HACK;
