@@ -138,6 +138,13 @@ proc draw_horz_line y {
     }
 }
 
+proc line2_drawp Line2 l {
+    goto $l.x1, $l.y1;
+    pen_du;
+    goto $l.x2, $l.y2;
+    pen_du;
+}
+
 ###################### arc ######################
 # TODO: put these into costume folders...
 costumes "../assets/pengine/arc/*.svg";
