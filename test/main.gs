@@ -17,7 +17,7 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 4;
+        pe_add_pts 3;
     }
 
     forever {
@@ -57,14 +57,14 @@ proc render {
 
     Circle c = pe_circle(1, 2);
     Vec2 cc = V2_CIRC(c);
-    c.r *= 2;
 
     d = V2_DIR_TO(pe_pts[3], cc);
-    ext = (V2_DIR_TO(pe_pts[4], cc) - d) % 360;
+    h = V2_DIST(pe_pts[3], cc) / c.r;
 
     pos p = POS_CIRCA(c, d);
 
-    fill_arc p, ext, 0.5;
+    draw_circle c;
+    fill_aw p, h;
 
     set_pen_color "#0000FF";
 }
