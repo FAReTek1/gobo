@@ -64,7 +64,7 @@ proc render {
 
     pos p = POS_CIRCA(c, d);
 
-    draw_segment p, ext;
+    fill_cone p, ext;
 
     set_pen_color "#0000FF";
 }
