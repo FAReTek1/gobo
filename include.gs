@@ -12,7 +12,6 @@
 
 %include ..\binomial
 %include ..\bounds
-%include ..\cmath
 %include ..\calculus
 %include ..\char
 %include ..\ease
@@ -31,6 +30,7 @@
 %include ..\pointengine
 %include ..\bezier2
 
+%include ..\blur
 %include ..\f3d
 %include ..\cosfx
 %include ..\bezply
