@@ -29,6 +29,9 @@ proc fnc_goto_set_size x, y, size {
 proc fnc_goto x, y {
     fnc_goto_set_size $x, $y, size();
 }
+proc fnc_v2_goto Vec2 v {
+    fnc_goto_set_size $v.x, $v.y, size();
+}
 
 proc fnc_change_xy dx, dy {
     fnc_goto x_position() + $dx, 
