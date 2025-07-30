@@ -103,6 +103,11 @@ func v2_apply_basis(Vec2 v, Vec2 ih, Vec2 jh) Vec2 {
 func v2_mag(Vec2 s) {
     return V2_MAG($s);
 }
+# square magnitude
+%define V2_MAG2(s) (s.x * s.x + s.y * s.y)
+func v2_mag2(Vec2 s) {
+    return V2_MAG2($s);
+}
 
 %define V2_DIST(s, o) sqrt((s.x - o.x) * (s.x - o.x) + (s.y - o.y) * (s.y - o.y)) 
 func v2_dist(Vec2 s, Vec2 o) {

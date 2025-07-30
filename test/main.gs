@@ -18,7 +18,11 @@ onflag {
     pointengine_settings.remove_key = "x";
     
     if length pe_pts == 0 {
-        pe_add_pts 3;
+        # pe_add_pts 4;
+        pe_add_pt Vec2(68, -114);
+        pe_add_pt Vec2(-167, 43);
+        pe_add_pt Vec2(137, 14);
+        pe_add_pt Vec2(109, -71);
     }
 
     forever {
@@ -44,13 +48,12 @@ onflag {
 proc render {
     FNC_POS_HACK;
 
+    pe_colors[1] = "#FF0000";
+    pe_colors[2] = "#FFAA00";
+    pe_colors[3] = "#00FF00";
+    pe_colors[4] = "#0000FF";
+
     set_pen_color "#0000FF";
     set_pen_size 1;
-
-    switch_costume "sttf1";
-    set_ps_color_HEX "00AAFF";
-    STTF pe_pts[1].x, pe_pts[1].y,
-         pe_pts[2].x, pe_pts[2].y,
-         pe_pts[3].x, pe_pts[3].y, costume_number();
-    cstamp;
+    quad_fill pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4];
 }
