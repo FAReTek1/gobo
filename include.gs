@@ -16,6 +16,8 @@
 %include ..\char
 %include ..\ease
 %include ..\base
+%include ..\gamma
+%include ..\lambertw
  
 %include ..\color
 %include ..\vec2

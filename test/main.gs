@@ -55,5 +55,5 @@ proc render {
 
     set_pen_color "#0000FF";
     set_pen_size 1;
-    quad_fill pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4];
+    FILL_QUAD_V2(pe_pts[1], pe_pts[2], pe_pts[3], pe_pts[4]);
 }
