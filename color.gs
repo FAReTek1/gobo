@@ -4,11 +4,7 @@
 # %include ..\base
 # %include ..\math
 
-# TODO: add macro versions of stamping/pencolor setting
-# TODO: add a coonditional compilation to store the current pen colour - what about using a macro hook?
-# TODO: testing
 ############################################ structs ############################################
-
 # Prefixed with a c to avoid naming conflicts with math.gs's RGB macro
 
 struct cHSVA {

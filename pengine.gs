@@ -1,6 +1,5 @@
 ###################### Tri ######################
 # Azex fixed res copied over by Triducal
-# TODO: consider using a different trifill
 proc fill_tri x1, y1, x2, y2, x3, y3 {
     local la = sqrt(($x2 - $x3) * ($x2 - $x3) + ($y2 - $y3) * ($y2 - $y3));
     local lb = sqrt(($x3 - $x1) * ($x3 - $x1) + ($y3 - $y1) * ($y3 - $y1));
@@ -185,7 +184,6 @@ proc box_draw Box b {BOX_DRAW($b);}
     }
 
 ###################### arc ######################
-# TODO: put these into costume folders...
 costumes "../assets/pengine/arc/*.svg";
 
 proc fill_arc pos pos, ext, hole {
@@ -403,7 +401,6 @@ proc draw_circle Circle c, res=30 {
     pen_up;
 }
 
-# TODO: clip circle
 ###################### Line ######################
 # capped line too
 costumes "../assets/pengine/capped_line/*.svg";
@@ -794,7 +791,6 @@ proc fill_dw_line_perfect Circle c1, Circle c2 {
 
     } else {
         local ir = ($c1.r - $c2.r);
-        # TODO: change this to a macro when it works
         local Line2 ps = circ_outer_tangent_points_to_v2(
                 Circle(0, 0, ir),
                 Vec2($c2.x - $c1.x, $c2.y - $c1.y)

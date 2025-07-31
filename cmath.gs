@@ -105,12 +105,11 @@ func c_acos(Complex s) Complex {
 }
 
 func c_atan(Complex s) Complex {
-    # TODO: this division can be slightly optimised
     local Complex z0 = c_div(Complex($s.r, $s.i + 1), Complex(-$s.r, 1 - $s.i));
     return Complex(ATAN2(z0.i, z0.r) / -114.5915590262, 0.5 * ln(C_ABS(z0)));
 }
 
-# TODO: these last 4 seem to be buggy
+# these last 4 seem to be buggy: https://github.com/FAReTek1/gobo/issues/6
 %define C_SINH(s) Complex(\
     SINH(s.r) * cos(s.i * 57.2957795131),\
     COSH(s.r) * sin(s.i * 57.2957795131))

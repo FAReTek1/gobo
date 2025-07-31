@@ -7,7 +7,6 @@
 
 # Quadratic bezier
 # A 3D quad bezier would be called Bez3D2. i.e. 2D is default, so you dont specify the dims
-# TODO: if/when nested structs exist, consider just making 1d beziers and making these 2d ones just contain 2 1d ones
 struct Bez2 {
     x0, y0,
     x1, y1,

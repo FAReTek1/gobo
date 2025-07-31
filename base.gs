@@ -12,7 +12,6 @@
 %define B8_DIGITS "01234567"
 %define B16_DIGITS "0123456789ABCDEF"
 
-# TODO: Optimise to remove use of slice()
 # Convert a base n integer to base 10. By default converts from HEX (note this particular case can be optimised to use the macro)
 func base_convto10(n, digits=B16_DIGITS) {
     if $n[1] == "-" {

@@ -5,7 +5,7 @@
 func costume_count() {
     local zero = 0;
     local old_costume = costume_number();
-    switch_costume zero; # TODO: file an issue on gh to remove need for this workaround
+    switch_costume zero;
     local ret = costume_number();
     switch_costume old_costume;
     return ret;
