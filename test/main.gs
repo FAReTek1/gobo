@@ -54,8 +54,7 @@ proc render {
     pe_colors[3] = "#00FF00";
     pe_colors[4] = "#0000FF";
 
-    delete nodes;
-    add Node{} to nodes;
+    NODE_RESET;
 
     Vec2 mv = Vec2(10 * round(mouse_x() / 10),
              10 * round(mouse_y() / 10));
@@ -68,8 +67,7 @@ proc render {
     NODE_ADD_POS(pos(50, 50, 1, 0));
     twig;
 
-    delete nodes;
-    add Node{} to nodes;
+    NODE_RESET;
 
     node_add_posm pos(0, 0, 1, 90), Mat2(
         1, mv.x / 120,

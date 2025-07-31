@@ -52,6 +52,7 @@ proc node_add_posm pos p, Mat2 m {
 %define NODE_RM1 delete nodes["last"]
 %define NODE_RM(t) repeat t {delete nodes["last"];}
 
+%define NODE_RESET delete nodes; add Node{} to nodes
 
 %define NV2_GOTO(v) V2_GOTO(V2_APPLY(v))
 proc nv2_goto Vec2 v {
@@ -72,12 +73,13 @@ proc npos_goto pos p {
 
 func nv2_inverse(Vec2 v) Vec2 {
     if _inverse_node_matrix.a == "uncached" {
-        Mat2 _inverse_node_matrix = mat2_inverse(_node_matrix);
+        Mat2 _inverse_node_matrix = MAT2_INVERSE(_node_matrix, _node_cache.s);
     }
     # we can do this even though node cache is not a vec2, because macros dont do typing - basically duck typed
     local Vec2 v = V2_SUB($v, _node_cache);
     return MAT2_MUL_V2(_inverse_node_matrix, v);
 }
+
 
 onflag {
     pos _node_cache = pos(0, 0, 1, 0);

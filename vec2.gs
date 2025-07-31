@@ -233,9 +233,9 @@ func mat2_det(Mat2 m) {
     return MAT2_DET($m);
 }
 
-%define MAT2_INVERSE(m, d) Mat2(\
-        m.d / d, -m.b / d,\
-        -m.c / d, m.a / d \
+%define MAT2_INVERSE(m, de) Mat2(\
+        m.d / de, -m.b / de,\
+        -m.c / de, m.a / de \
     )
 
 func mat2_inverse(Mat2 m) Mat2 {
