@@ -63,22 +63,10 @@ proc node_add_posm pos p, Mat2 m {
 
 %define NODE_RESET delete nodes; add Node{} to nodes
 
-%define NV2_GOTO(v) V2_GOTO(V2_APPLY(v))
-proc nv2_goto Vec2 v {
-    NV2_GOTO($v);
-}
-%define N_GOTO(X, Y) goto _node_cache.x + (X * _node_matrix.a + Y * _node_matrix.b),\
-                          _node_cache.y + (X * _node_matrix.c + Y * _node_matrix.d)
-
 %define POS_APPLY(p) pos(\
     _node_cache.x + (p.x * _node_matrix.a + p.y * _node_matrix.b),\
     _node_cache.y + (p.x * _node_matrix.c + p.y * _node_matrix.d),\
     _node_cache.s * p.s, _node_cache.d + p.d)
-
-%define NPOS_GOTO(p) fnc_goto_pos POS_APPLY(p)
-proc npos_goto pos p {
-    NPOS_GOTO($p);
-}
 
 func nv2_inverse(Vec2 v) Vec2 {
     if _inverse_node_matrix.a == "uncached" {

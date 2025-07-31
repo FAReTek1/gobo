@@ -44,3 +44,4 @@
 
 %include ..\node
 %include ..\cam
+%include ..\ninja
