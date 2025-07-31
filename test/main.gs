@@ -104,13 +104,11 @@ proc tick {
         NODE_RM1;
     NODE_RM1;
 
-    node_add_posm pos(0, 0, 1, 90), Mat2(
-        1, mv.x / 120,
-        mv.y / 120, 1);
+    node_add_pos pos(0, 0, 1, timer() * 45);
         set_pen_size 5;
         tree;
         NODE_ADD_POS(pos(50, 50, 1, 45));
-
+            nfl_tri 0, 0, 100, 100, 100, 0;            
             twig;
             npos_goto pos(100, 0, 100, 90);
             switch_costume "Dango Cat";
@@ -123,6 +121,7 @@ proc tick {
             pen_down;
             N_GOTO(0 ,0);
             pen_up;
+
         NODE_RM1;
     NODE_RM1;
 }
