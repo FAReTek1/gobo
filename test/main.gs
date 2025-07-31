@@ -6,6 +6,8 @@ costumes "../assets/thinkingplanely stretch box (4000x4000).svg" as "stretch1";
 costumes "../assets/thinkingplanely stretch box flipped (4000x4000).svg" as "stretch1f";
 costumes "sttf1.svg", "sttf2.svg", "sttf3.svg";
 
+sounds "Part_7.mp3" as "music";
+
 %define DISABLE_PROJECTENV_AUTO_LOOP
 %define DISABLE_PROJECTENV_LOOP_ON_STOP
 
@@ -25,13 +27,12 @@ onflag {
         pe_add_pt Vec2(137, 14);
         pe_add_pt Vec2(109, -71);
     }
-
     forever {
         projectenv_fps_tick;
 
         erase_all;
         pointengine_control_tick;
-        render;
+        tick;
         pointengine_render;
     }
 }
@@ -45,8 +46,42 @@ onflag {
     }                                       \
     pen_up;
 
+proc cam {
+    CAM_RESET;
 
-proc render {
+    local dt = 0.5;
+    local r = 0;
+    local i = 1;
+    repeat length keyframes {
+        local kf = keyframes[i];
+        local change = ease_in_circ(0, 1, kf - dt, dt) + ease_out_circ(0, -1, kf, dt);
+
+        CAM.s += change * 0.3;
+        CAM.d += change * 5;
+
+        r += change * 10;
+        i++;
+    }
+    CAM.x += cos(timer() * 90) * r;
+    CAM.y += sin(timer() * 90) * r;
+
+    NODE_CAM;
+}
+
+var keyframe_timer_speed = 1;
+list keyframes = file ```keyframes.txt```;
+
+onflag {
+    set_pitch_effect_to_speed keyframe_timer_speed;
+    start_sound "music";
+}
+
+onkey "space" {
+    add timer() * keyframe_timer_speed to keyframes;
+    until not key_pressed("space"){}
+}
+
+proc tick {
     FNC_POS_HACK;
 
     pe_colors[1] = "#FF0000";
@@ -54,42 +89,42 @@ proc render {
     pe_colors[3] = "#00FF00";
     pe_colors[4] = "#0000FF";
 
-    NODE_RESET;
+    delete nodes;
+    cam;
 
     Vec2 mv = Vec2(10 * round(mouse_x() / 10),
              10 * round(mouse_y() / 10));
 
     NODE_ADD_POS(pos(mv.x, mv.y, 1, 0));
-    
-    set_pen_size 5;
-    tree;
-    
-    NODE_ADD_POS(pos(50, 50, 1, 0));
-    twig;
+        set_pen_size 5;
+        tree;
 
-    NODE_RESET;
+        NODE_ADD_POS(pos(50, 50, 1, 0));
+            twig;
+        NODE_RM1;
+    NODE_RM1;
 
     node_add_posm pos(0, 0, 1, 90), Mat2(
         1, mv.x / 120,
-        mv.y / 120, 1 
-    );
-    
-    set_pen_size 5;
-    tree;
-    
-    NODE_ADD_POS(pos(50, 50, 1, 45));
+        mv.y / 120, 1);
+        set_pen_size 5;
+        tree;
+        NODE_ADD_POS(pos(50, 50, 1, 45));
 
-    twig;
-    npos_goto pos(100, 0, 100, 90);
-    switch_costume "Dango Cat";
-    stamp;
+            twig;
+            npos_goto pos(100, 0, 100, 90);
+            switch_costume "Dango Cat";
+                stamp;
+            FNC_POS_HACK;
 
-    set_pen_color "#FF0000";
-    Vec2 p = nv2_inverse(mv);
-    NV2_GOTO(p);
-    pen_down;
-    N_GOTO(0 ,0);
-    pen_up;
+            set_pen_color "#FF0000";
+            Vec2 p = nv2_inverse(mv);
+            NV2_GOTO(p);
+            pen_down;
+            N_GOTO(0 ,0);
+            pen_up;
+        NODE_RM1;
+    NODE_RM1;
 }
 
 proc tree {
