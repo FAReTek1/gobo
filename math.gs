@@ -37,9 +37,6 @@
 # Return nth root of x
 %define NROOT(n,x) antiln(ln(x) / n)
 
-# Return the gamma function of `VALUE`.
-%define GAMMA(VALUE) antiln(ln(VALUE)/2.2)
-
 # Clamp `VALUE` above zero. (Returns 0 for `VALUE` < 0)
 %define POSITIVE_CLAMP(VALUE) (((VALUE)>0)*(VALUE))
 
