@@ -42,11 +42,12 @@ onflag {
     PROJECTENV_LOOP;
 %endif
 %if DISABLE_PROJECTENV_AUTO_LOOP
-    wait 5;
-    if not _projectenv_ticked_yet {
-        warn "Projectenv has not been ticked yet. Please add a loop like `PROJECTENV_LOOP`.";
-        warn "To disable this message, do not include projectenv. It will only work when it is being ticked.";
-        # you can actually disable it by constantly resetting the timer, but it does not remove the problem.
+    until _projectenv_ticked_yet {
+        if timer () > 5 {
+            warn "Projectenv has not been ticked yet. Please add a loop like `PROJECTENV_LOOP`.";
+            warn "To disable this message, do not include projectenv. It will only work when it is being ticked.";
+            # you can actually disable it by constantly resetting the timer, but it does not remove the problem.
+        }
     }
 %endif
 }
