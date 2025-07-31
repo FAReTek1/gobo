@@ -57,7 +57,10 @@ proc render {
     delete nodes;
     add Node{} to nodes;
 
-    NODE_ADD_POS(pos(mouse_x(), mouse_y(), 1, 0));
+    Vec2 mv = Vec2(10 * round(mouse_x() / 10),
+             10 * round(mouse_y() / 10));
+
+    NODE_ADD_POS(pos(mv.x, mv.y, 1, 0));
     
     set_pen_size 5;
     tree;
@@ -69,8 +72,8 @@ proc render {
     add Node{} to nodes;
 
     node_add_posm pos(0, 0, 1, 90), Mat2(
-        1, mouse_x() / 120,
-        mouse_y() / 120, 1 
+        1, mv.x / 120,
+        mv.y / 120, 1 
     );
     
     set_pen_size 5;
@@ -82,6 +85,13 @@ proc render {
     npos_goto pos(100, 0, 100, 90);
     switch_costume "Dango Cat";
     stamp;
+
+    set_pen_color "#FF0000";
+    Vec2 p = nv2_inverse(mv);
+    NV2_GOTO(p);
+    pen_down;
+    N_GOTO(0 ,0);
+    pen_up;
 }
 
 proc tree {

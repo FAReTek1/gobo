@@ -70,11 +70,21 @@ proc npos_goto pos p {
     NPOS_GOTO($p);
 }
 
+func nv2_inverse(Vec2 v) Vec2 {
+    if _inverse_node_matrix.a == "uncached" {
+        Mat2 _inverse_node_matrix = mat2_inverse(_node_matrix);
+    }
+    # we can do this even though node cache is not a vec2, because macros dont do typing - basically duck typed
+    local Vec2 v = V2_SUB($v, _node_cache);
+    return MAT2_MUL_V2(_inverse_node_matrix, v);
+}
+
 onflag {
     pos _node_cache = pos(0, 0, 1, 0);
     Mat2 _node_matrix = Mat2(
         1, 0,
         0, 1);
+    Mat2 _inverse_node_matrix = mat2_inverse(_node_matrix);
 }
 
 proc node_cache {
@@ -97,4 +107,5 @@ proc node_cache {
     # does normal multiplication look better? it has less domain, so idk
     # this does mean that the scale attr of the Node can be removed
     _node_cache.s = MAT2_DET(_node_matrix);
+    _inverse_node_matrix.a = "uncached";
 }
