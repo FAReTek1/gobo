@@ -45,6 +45,6 @@ proc fnc_move_steps steps {
 }
 
 proc fnc_goto_pos pos p {
-    fnc_goto_set_size $p.x, $p.y, $p.s;
-    point_in_direction $p.d;
+    fnc_goto_set_size $p.x, $p.y, abs($p.s);
+    point_in_direction $p.d + 180 * ($p.s < 0);
 }

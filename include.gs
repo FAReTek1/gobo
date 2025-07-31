@@ -41,3 +41,4 @@
 %include ..\pengine
 %include ..\clip
 %include ..\sttf
+%include ..\node
